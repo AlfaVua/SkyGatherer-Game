@@ -27,7 +27,14 @@ namespace Generators
             return level;
         }
 
-        public LevelBase GenerateLevel(int indexX, uint indexY, LevelType type)
+        public LevelBase GetStartingLevel()
+        {
+            var level = InitLevel(_static.startingLevel, 0, 0);
+            _activeLevels.Add(level.Name, level);
+            return level;
+        }
+
+        public LevelBase GetLevelAt(int indexX, uint indexY, LevelType type)
         {
             var key = LevelCache.GetKey(indexX, indexY);
             if (_activeLevels.TryGetValue(key, out var level)) return level;
@@ -37,7 +44,7 @@ namespace Generators
             return level;
         }
 
-        public LevelBase GenerateLevel(int indexX, uint indexY, CachedLevelData data)
+        public LevelBase GetLevelAt(int indexX, uint indexY, CachedLevelData data)
         {
             var key = LevelCache.GetKey(indexX, indexY);
             if (_activeLevels.TryGetValue(key, out var level)) return level;

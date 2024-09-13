@@ -15,6 +15,7 @@ namespace Generators
     [CreateAssetMenu(menuName = "Level Generation/Base")]
     public class LevelGeneratorData : ScriptableObject
     {
+        public LevelBase startingLevel;
         public List<LevelBase> prefabs;
 
         private List<LevelBase> _leftExitLevels;

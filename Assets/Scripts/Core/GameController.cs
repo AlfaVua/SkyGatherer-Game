@@ -21,7 +21,7 @@ namespace Core
 
         private void Start()
         {
-            PlayerMovedToNewLevel.Invoke(0, 0);
+            levelController.GenerateInit();
         }
 
         private int positionX = 0;

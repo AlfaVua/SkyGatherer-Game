@@ -20,6 +20,11 @@ namespace Core
             mainController.PlayerMovedToNewLevel.AddListener(GenerateLevelAt);
         }
 
+        public void GenerateInit()
+        {
+            GenerateLevelsAround(_generator.GetStartingLevel());
+        }
+
         private void GenerateLevelAt(int indexX, uint indexY)
         {
             _generator.GetRemovableLevels(indexX, indexY).ForEach(RemoveLevel);
@@ -41,8 +46,8 @@ namespace Core
         private LevelBase GetLevel(int indexX, uint indexY, LevelType type)
         {
             return _cache.HasLevel(indexX, indexY) ? 
-                _generator.GenerateLevel(indexX, indexY, _cache.GetLevelData(indexX, indexY)) :
-                _generator.GenerateLevel(indexX, indexY, type);
+                _generator.GetLevelAt(indexX, indexY, _cache.GetLevelData(indexX, indexY)) :
+                _generator.GetLevelAt(indexX, indexY, type);
         }
 
         private void RemoveLevel(LevelBase level)
