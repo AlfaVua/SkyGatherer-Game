@@ -1,4 +1,5 @@
 using System;
+using Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,17 +11,22 @@ namespace Core
         
         [SerializeField] private LevelController levelController;
         [SerializeField] private Camera mainCamera;
+        [SerializeField] private PlayerMovement playerPrefab;
+        
+        private Inputs _inputs;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
-        
+        public Inputs Inputs => _inputs;
         private void Awake()
         {
             Instance = this;
+            _inputs = new Inputs();
             levelController.Init(this);
         }
 
         private void Start()
         {
+            Instantiate(playerPrefab);
             levelController.GenerateInit();
         }
 
@@ -29,31 +35,41 @@ namespace Core
 
         private void Update() //tests
         {
-            var update = false;
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                positionX--;
-                update = true;
-            } else if (Input.GetKeyDown(KeyCode.D))
-            {
-                positionX++;
-                update = true;
-            }
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                positionY++;
-                update = true;
-            } else if (Input.GetKeyDown(KeyCode.S) && positionY != 0)
-            {
-                positionY--;
-                update = true;
-            }
+            // var update = false;
+            // if (Input.GetKeyDown(KeyCode.A))
+            // {
+            //     positionX--;
+            //     update = true;
+            // } else if (Input.GetKeyDown(KeyCode.D))
+            // {
+            //     positionX++;
+            //     update = true;
+            // }
+            // if (Input.GetKeyDown(KeyCode.W))
+            // {
+            //     positionY++;
+            //     update = true;
+            // } else if (Input.GetKeyDown(KeyCode.S) && positionY != 0)
+            // {
+            //     positionY--;
+            //     update = true;
+            // }
+            //
+            // if (update)
+            // {
+            //     PlayerMovedToNewLevel.Invoke(positionX, positionY);
+            //     mainCamera.transform.position = new Vector3(positionX * 17.8f, positionY * 10f, mainCamera.transform.position.z);
+            // }
+        }
 
-            if (update)
-            {
-                PlayerMovedToNewLevel.Invoke(positionX, positionY);
-                mainCamera.transform.position = new Vector3(positionX * 17.8f, positionY * 10f, mainCamera.transform.position.z);
-            }
+        private void OnEnable()
+        {
+            _inputs.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _inputs.Disable();
         }
     }
 }

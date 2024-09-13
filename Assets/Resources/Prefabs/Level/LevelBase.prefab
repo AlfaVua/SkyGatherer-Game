@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3314962536679903131}
   - component: {fileID: 2122283649778801672}
   - component: {fileID: 2121662284879141715}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LevelBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sidesData: {fileID: 0}
   platforms: []
-  platformContainer: {fileID: 190964080125495504}
   staticID: 0
 --- !u!61 &2121662284879141715
 BoxCollider2D:
@@ -104,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 190964080125495504}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
