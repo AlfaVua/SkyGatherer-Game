@@ -10,7 +10,7 @@ namespace Core
         public static GameController Instance { get; private set; }
         
         [SerializeField] private LevelController levelController;
-        [SerializeField] private Camera mainCamera;
+        [SerializeField] private FollowingCamera camera;
         [SerializeField] private PlayerMovement playerPrefab;
         
         private Inputs _inputs;
@@ -22,17 +22,27 @@ namespace Core
             Instance = this;
             _inputs = new Inputs();
             levelController.Init(this);
+            PlayerMovedToNewLevel.AddListener(OnPlayerInNewLevel);
         }
 
         private void Start()
         {
-            Instantiate(playerPrefab);
+            camera.player = Instantiate(playerPrefab).transform;
             levelController.GenerateInit();
         }
 
-        private int positionX = 0;
-        private uint positionY = 0;
+        private void OnPlayerInNewLevel(int indexX, uint indexY)
+        {
+            SetCameraTarget(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY);
+        }
 
+        public void SetCameraTarget(float x, float y)
+        {
+            camera.targetPosition.Set(x, y, camera.transform.position.z);
+        }
+
+        // private int positionX = 0;
+        // private uint positionY = 0;
         private void Update() //tests
         {
             // var update = false;

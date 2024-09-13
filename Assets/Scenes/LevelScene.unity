@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelController: {fileID: 1215504738}
-  mainCamera: {fileID: 1683572625}
+  camera: {fileID: 1683572628}
   playerPrefab: {fileID: 7229322560117192611, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
 --- !u!4 &310175352
 Transform:
@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 1683572625}
   - component: {fileID: 1683572624}
   - component: {fileID: 1683572627}
+  - component: {fileID: 1683572628}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -318,6 +319,21 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &1683572628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683572623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6091401b59b8414e9ea2bbc3120a36eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
+  playerPositionEffect: 0.05
 --- !u!1001 &960436715817546823
 PrefabInstance:
   m_ObjectHideFlags: 0

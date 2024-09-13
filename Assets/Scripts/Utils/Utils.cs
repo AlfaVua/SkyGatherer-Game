@@ -8,5 +8,9 @@ namespace Utils
         {
             return obj.tag.Equals("Player");
         }
+
+        public static float IndexToX => 17.8f;
+
+        public static float IndexToY => 10f;
     }
 }

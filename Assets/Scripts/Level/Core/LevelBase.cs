@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Core;
 using Generators;
 using Level.Platforms;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace Level.Core
             Name = LevelCache.GetKey(indexX, indexY);
             IndexX = indexX;
             IndexY = indexY;
-            transform.position = new Vector3(indexX * 17.8f, indexY * 10f, 0);
+            transform.position = new Vector3(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY, 0);
         }
 
         public void UpdateData(CachedLevelData cached)
@@ -44,5 +45,10 @@ namespace Level.Core
         public bool RightExit => sidesData.rightExit;
         public bool TopExit => sidesData.topExit;
         public bool BottomExit => sidesData.bottomExit;
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            GameController.Instance.PlayerMovedToNewLevel.Invoke(IndexX, IndexY);
+        }
     }
 }
