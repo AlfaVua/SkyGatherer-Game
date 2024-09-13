@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Core;
 using UnityEngine;
@@ -15,15 +16,20 @@ namespace Player
         [SerializeField] private float jumpPower = 7;
         [SerializeField] private float moveSpeed = 1;
         [SerializeField] [Min(0)] private float rayDistanceFromCenter = .7f;
-        private bool IsOnGround => rigidBody.velocity.y <= 0 && (
-            Physics2D.Raycast(GetRayStartPosition(-1), Vector2.down, raycastDistance, groundMask) ||
-            Physics2D.Raycast(GetRayStartPosition(1), Vector2.down, raycastDistance, groundMask)
-            );
-        public float RaycastDistance => raycastDistance;
+        [SerializeField] private ParticleSystem slowdownParticles;
 
-        public Vector3 GetRayStartPosition(float rayDirectionX = 0)
+        private bool _fallingSlowed;
+        private bool IsOnGround => rigidBody.velocity.y <= 0 && RaycastGround();
+
+        private Vector3 GetRayStartPosition(float rayDirectionX = 0)
         {
             return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f) + Vector3.up * rayCastingOffsetY;
+        }
+
+        private bool RaycastGround(float distanceMultiplier = 1)
+        {
+            return Physics2D.Raycast(GetRayStartPosition(-1), Vector2.down, raycastDistance * distanceMultiplier, groundMask) ||
+                Physics2D.Raycast(GetRayStartPosition(1), Vector2.down, raycastDistance * distanceMultiplier, groundMask);
         }
 
         private void JumpAction()
@@ -36,7 +42,23 @@ namespace Player
             if (rigidBody.velocity.y < -1)
             {
                 rigidBody.velocity += Vector2.up * (rigidBody.mass * Physics2D.gravity.y / 50f);
+                SlowdownFallingIfNeeded();
             }
+        }
+
+        private void SlowdownFallingIfNeeded()
+        {
+            if (!_fallingSlowed && rigidBody.velocity.y < -10 && RaycastGround(3))
+            {
+                rigidBody.AddForce(Vector2.down * (rigidBody.velocity.y * .9f), ForceMode2D.Impulse);
+                _fallingSlowed = true;
+                slowdownParticles.Emit(25);
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            _fallingSlowed = false;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -67,8 +89,8 @@ namespace Player
         {
             var positionLeft = GetRayStartPosition(-1);
             var positionRight = GetRayStartPosition(1);
-            Gizmos.DrawLine(positionLeft, positionLeft + Vector3.down * RaycastDistance);
-            Gizmos.DrawLine(positionRight, positionRight + Vector3.down * RaycastDistance);
+            Gizmos.DrawLine(positionLeft, positionLeft + Vector3.down * raycastDistance);
+            Gizmos.DrawLine(positionRight, positionRight + Vector3.down * raycastDistance);
         }
 
         private void OnEnable()
