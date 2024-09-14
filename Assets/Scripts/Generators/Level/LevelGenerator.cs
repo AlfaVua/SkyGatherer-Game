@@ -35,9 +35,14 @@ namespace Generators.Level
             return level;
         }
 
+        public bool IsCoordsActive(int indexX, uint indexY)
+        {
+            return _activeLevels.ContainsKey(LevelCache.GetKey(indexX, indexY));
+        }
+        
         public LevelBase GetActiveLevelAt(int indexX, uint indexY)
         {
-            return _activeLevels.TryGetValue(LevelCache.GetKey(indexX, indexY), out var level) ? level : null;
+            return _activeLevels[LevelCache.GetKey(indexX, indexY)];
         }
 
         public LevelBase GetLevelAt(int indexX, uint indexY, LevelType type)
