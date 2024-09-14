@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 1151447608105168304}
   - component: {fileID: 1972595252330982974}
   - component: {fileID: 8245532387145757886}
-  - component: {fileID: 3891041097614445309}
   m_Layer: 0
   m_Name: FrontParticles
   m_TagString: Untagged
@@ -636,7 +635,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
+    gravitySource: 1
     maxNumParticles: 40
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -4877,17 +4876,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3891041097614445309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5242680276716142788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 553ccdd34cc446819d4fd29b0eeecb7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  parallaxDivider: 1

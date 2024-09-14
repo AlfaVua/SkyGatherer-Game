@@ -21,7 +21,7 @@ namespace Level.Resource
         {
             _static = data;
             view.sprite = data.View;
-            view.transform.position += Vector3.up * Mathf.Abs(view.bounds.max.y - view.bounds.min.y) / 2;
+            view.transform.position += Vector3.up * view.bounds.size.y / 2;
         }
 
         public void UpdateData(CachedLevelObjectData data)

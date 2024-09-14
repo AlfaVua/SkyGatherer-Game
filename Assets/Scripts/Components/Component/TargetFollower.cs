@@ -5,12 +5,11 @@ namespace Components.Component
     public class TargetFollower : MonoBehaviour
     {
         [SerializeField] private Transform target;
-        [SerializeField] private float parallaxDivider = 2;
-        private void FixedUpdate()
+        [SerializeField] [Range(-1, 1)] private float parallaxEffect;
+
+        private void Update()
         {
-            if (parallaxDivider == 0) return;
-            var position = target.position;
-            transform.position = new Vector3(position.x / parallaxDivider, position.y / parallaxDivider, transform.position.z);
+            transform.position = new Vector3(target.position.x * parallaxEffect, target.position.y * parallaxEffect, transform.position.z);
         }
     }
 }
