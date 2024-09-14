@@ -11,23 +11,20 @@ namespace Core
         
         [SerializeField] private LevelController levelController;
         [SerializeField] private FollowingCamera camera;
-        [SerializeField] private PlayerMovement playerPrefab;
+        [SerializeField] private PlayerMovement player;
         
-        private Inputs _inputs;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
-        public Inputs Inputs => _inputs;
         private void Awake()
         {
             Instance = this;
-            _inputs = new Inputs();
             levelController.Init(this);
             PlayerMovedToNewLevel.AddListener(OnPlayerInNewLevel);
         }
 
         private void Start()
         {
-            camera.additionalEffector = Instantiate(playerPrefab).transform;
+            camera.additionalEffector = player.transform;
             levelController.GenerateInit();
         }
 
@@ -70,12 +67,12 @@ namespace Core
 
         private void OnEnable()
         {
-            _inputs.Enable();
+            InputController.Inputs.Enable();
         }
 
         private void OnDisable()
         {
-            _inputs.Disable();
+            InputController.Inputs.Disable();
         }
     }
 }

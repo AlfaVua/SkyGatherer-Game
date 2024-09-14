@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Core;
 using UnityEngine;
@@ -96,12 +95,12 @@ namespace Player
 
         private void OnEnable()
         {
-            GameController.Instance.Inputs.Player.AddCallbacks(this);
+            InputController.Inputs.Player.AddCallbacks(this);
         }
 
         private void OnDisable()
         {
-            GameController.Instance.Inputs.Player.RemoveCallbacks(this);
+            InputController.Inputs.Player.RemoveCallbacks(this);
         }
     }
 }

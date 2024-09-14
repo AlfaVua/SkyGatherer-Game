@@ -25,7 +25,7 @@ namespace Generators.Level
         
         public void Init()
         {
-            if (_leftExitLevels != null) return;
+            if (_leftExitLevels != null && _leftExitLevels.Count != 0) return;
             _leftExitLevels = new List<LevelBase>();
             _rightExitLevels = new List<LevelBase>();
             _bottomExitLevels = new List<LevelBase>();

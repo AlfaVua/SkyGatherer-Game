@@ -17,7 +17,7 @@ namespace Generators.Level
 
         public void Init()
         {
-            if (_objectsByRarity != null) return;
+            if (_objectsByRarity != null && _objectsByRarity.Count != 0) return;
             _objectsByRarity = new Dictionary<Rarity, List<LevelObjectData>>();
             objects.ForEach(obj =>
             {
