@@ -36,10 +36,7 @@ namespace Core
             SetCameraTarget(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY);
         }
 
-        public void SetCameraTarget(float x, float y)
-        {
-            camera.targetPosition.Set(x, y, camera.transform.position.z);
-        }
+        private Action<float, float> SetCameraTarget => camera.SetTargetPosition;
 
         // private int positionX = 0;
         // private uint positionY = 0;

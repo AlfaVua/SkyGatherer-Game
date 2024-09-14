@@ -68,6 +68,7 @@ namespace Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            if (context.canceled) return;
             if (IsOnGround) JumpAction();
             else if (!_fallingSlowed && rigidBody.velocity.y < 0) SlowdownFalling();
         }
