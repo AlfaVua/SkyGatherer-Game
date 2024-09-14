@@ -1,22 +1,29 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
     public class FollowingCamera : MonoBehaviour
     {
-        [SerializeField] private float playerPositionEffect;
-        [HideInInspector] public Transform player;
-        private Vector3 targetPosition;
+        [SerializeField] private float effectorPositionEffect;
+        public Transform additionalEffector;
+        private Vector3 _targetPosition;
+
+        private void Awake()
+        {
+            _targetPosition = transform.position;
+        }
 
         private void Update()
         {
-            var playerCoords = new Vector3(player.position.x, player.position.y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, targetPosition + (playerCoords - targetPosition) * playerPositionEffect, .05f * Time.deltaTime * 60);
+            var effector = additionalEffector ? new Vector3(additionalEffector.position.x, additionalEffector.position.y, transform.position.z) : transform.position;
+            transform.position = Vector3.Lerp(transform.position, _targetPosition + (effector - _targetPosition) * effectorPositionEffect, .05f * Time.deltaTime * 60);
         }
 
         public void SetTargetPosition(float x, float y)
         {
-            targetPosition.Set(x, y, transform.position.z);
+            _targetPosition.Set(x, y, transform.position.z);
         }
     }
 }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Level.Core;
 using UnityEngine;
+using Utils.ListExtension;
 
-namespace Generators
+namespace Generators.Level
 {
-    using Utils.ListExtension;
     public enum LevelType
     {
         LeftExit,
@@ -25,6 +25,7 @@ namespace Generators
         
         public void Init()
         {
+            if (_leftExitLevels != null) return;
             _leftExitLevels = new List<LevelBase>();
             _rightExitLevels = new List<LevelBase>();
             _bottomExitLevels = new List<LevelBase>();
@@ -42,10 +43,11 @@ namespace Generators
 
         private void UpdatePrefabs()
         {
-            var i = 0;
+            startingLevel.sessionID = 0;
+            var i = 1;
             prefabs.ForEach(levelBase =>
             {
-                levelBase.staticID = i++;
+                levelBase.sessionID = i++;
                 if (levelBase.LeftExit) _leftExitLevels.Add(levelBase);
                 if (levelBase.RightExit) _rightExitLevels.Add(levelBase);
                 if (levelBase.BottomExit) _bottomExitLevels.Add(levelBase);
@@ -55,7 +57,7 @@ namespace Generators
 
         public LevelBase GetById(int id)
         {
-            return prefabs[id];
+            return id == 0 ? startingLevel : prefabs[id - 1];
         }
 
         public LevelBase GetRandom(bool isBottom, LevelType type)

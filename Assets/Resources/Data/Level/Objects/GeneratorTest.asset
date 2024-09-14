@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a1bc697c7fc43f9a70be0bbfefd27ef, type: 3}
+  m_Name: GeneratorTest
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 11400000, guid: b5649209dbeb32d4084cde0cbd534069, type: 2}
+  - {fileID: 11400000, guid: 635a15f0b5e8d2a4bac299949becefc6, type: 2}
+  - {fileID: 11400000, guid: 9355887457d7f154381e9e8bc0c9f37a, type: 2}
+  - {fileID: 11400000, guid: d3f5b82bc6334a840a734b6810b4bdf2, type: 2}
+  - {fileID: 11400000, guid: 1a583ef2dce4aad498e55078f76f319e, type: 2}
+  spawnChance: 0.5
+  rarityConfig: {fileID: 11400000, guid: e6e0a3c542d98844ba8b5f0acda5847b, type: 2}

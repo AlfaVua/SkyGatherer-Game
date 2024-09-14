@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Level.Platforms;
 
 namespace Level.Core
 {
     [Serializable]
     public struct CachedLevelData
     {
-        public List<CachedPlatformData> platforms;
+        public List<CachedLevelObjectData> Objects;
         public string name;
-        public int id;
+        public int sessionID;
     }
 }

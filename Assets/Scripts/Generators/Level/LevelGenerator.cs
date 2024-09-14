@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Level.Core;
 using UnityEngine;
+using Utils.TransformExtenstion;
 
-namespace Generators
+namespace Generators.Level
 {
-    using Utils.TransformExtenstion;
     public class LevelGenerator
     {
         private readonly Dictionary<string, LevelBase> _activeLevels;
@@ -30,27 +30,28 @@ namespace Generators
         public LevelBase GetStartingLevel()
         {
             var level = InitLevel(_static.startingLevel, 0, 0);
+            level.AfterFirstInit();
             _activeLevels.Add(level.Name, level);
             return level;
         }
 
+        public LevelBase GetActiveLevelAt(int indexX, uint indexY)
+        {
+            return _activeLevels.TryGetValue(LevelCache.GetKey(indexX, indexY), out var level) ? level : null;
+        }
+
         public LevelBase GetLevelAt(int indexX, uint indexY, LevelType type)
         {
-            var key = LevelCache.GetKey(indexX, indexY);
-            if (_activeLevels.TryGetValue(key, out var level)) return level;
-
-            level = InitLevel(_static.GetRandom(indexY == 0, type), indexX, indexY);
-            _activeLevels.Add(key, level);
+            var level = InitLevel(_static.GetRandom(indexY == 0, type), indexX, indexY);
+            level.AfterFirstInit();
+            _activeLevels.Add(level.Name, level);
             return level;
         }
 
         public LevelBase GetLevelAt(int indexX, uint indexY, CachedLevelData data)
         {
-            var key = LevelCache.GetKey(indexX, indexY);
-            if (_activeLevels.TryGetValue(key, out var level)) return level;
-            
-            level = InitLevel(_static.GetById(data.id), indexX, indexY);
-            _activeLevels.Add(key, level);
+            var level = InitLevel(_static.GetById(data.sessionID), indexX, indexY);
+            _activeLevels.Add(level.Name, level);
             level.UpdateData(data);
             return level;
         }

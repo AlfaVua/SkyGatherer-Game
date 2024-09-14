@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Core;
 using Generators;
-using Level.Platforms;
+using Generators.Level;
 using UnityEngine;
 
 namespace Level.Core
@@ -10,18 +8,18 @@ namespace Level.Core
     public class LevelBase : MonoBehaviour
     {
         [SerializeField] private LevelSidesData sidesData;
-        [SerializeField] private List<PlatformBase> platforms;
+        [SerializeField] private LevelObjectGenerator objectGenerator;
         public string Name { get; private set; }
         public int IndexX { get; private set; }
         public uint IndexY { get; private set; }
 
-        [HideInInspector] public int staticID;
+        [HideInInspector] public int sessionID;
 
         public virtual CachedLevelData CachedData => new()
         {
-            platforms = platforms.Select(platform => platform.CachedData).ToList(),
+            Objects = objectGenerator.CachedObjectsData,
             name = Name,
-            id = staticID
+            sessionID = sessionID
         };
 
         public void Init(int indexX, uint indexY)
@@ -30,15 +28,18 @@ namespace Level.Core
             IndexX = indexX;
             IndexY = indexY;
             transform.position = new Vector3(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY, 0);
+            objectGenerator.Init();
+        }
+
+        public void AfterFirstInit()
+        {
+            objectGenerator.Generate();
         }
 
         public void UpdateData(CachedLevelData cached)
         {
             Name = cached.name;
-            for (var i = 0; i < cached.platforms.Count; i++)
-            {
-                platforms[i].UpdateData(cached.platforms[i]);
-            }
+            objectGenerator.Generate(cached.Objects);
         }
 
         public bool LeftExit => sidesData.leftExit;

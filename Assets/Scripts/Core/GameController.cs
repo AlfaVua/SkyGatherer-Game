@@ -27,7 +27,7 @@ namespace Core
 
         private void Start()
         {
-            camera.player = Instantiate(playerPrefab).transform;
+            camera.additionalEffector = Instantiate(playerPrefab).transform;
             levelController.GenerateInit();
         }
 
@@ -40,34 +40,33 @@ namespace Core
 
         // private int positionX = 0;
         // private uint positionY = 0;
-        private void Update() //tests
-        {
-            // var update = false;
-            // if (Input.GetKeyDown(KeyCode.A))
-            // {
-            //     positionX--;
-            //     update = true;
-            // } else if (Input.GetKeyDown(KeyCode.D))
-            // {
-            //     positionX++;
-            //     update = true;
-            // }
-            // if (Input.GetKeyDown(KeyCode.W))
-            // {
-            //     positionY++;
-            //     update = true;
-            // } else if (Input.GetKeyDown(KeyCode.S) && positionY != 0)
-            // {
-            //     positionY--;
-            //     update = true;
-            // }
-            //
-            // if (update)
-            // {
-            //     PlayerMovedToNewLevel.Invoke(positionX, positionY);
-            //     mainCamera.transform.position = new Vector3(positionX * 17.8f, positionY * 10f, mainCamera.transform.position.z);
-            // }
-        }
+        // private void Update() //tests
+        // {
+        //     var update = false;
+        //     if (Input.GetKeyDown(KeyCode.A))
+        //     {
+        //         positionX--;
+        //         update = true;
+        //     } else if (Input.GetKeyDown(KeyCode.D))
+        //     {
+        //         positionX++;
+        //         update = true;
+        //     }
+        //     if (Input.GetKeyDown(KeyCode.W))
+        //     {
+        //         positionY++;
+        //         update = true;
+        //     } else if (Input.GetKeyDown(KeyCode.S) && positionY != 0)
+        //     {
+        //         positionY--;
+        //         update = true;
+        //     }
+        //     
+        //     if (update)
+        //     {
+        //         PlayerMovedToNewLevel.Invoke(positionX, positionY);
+        //     }
+        // }
 
         private void OnEnable()
         {

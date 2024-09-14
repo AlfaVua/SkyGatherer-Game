@@ -1,4 +1,5 @@
 using Generators;
+using Generators.Level;
 using Level.Core;
 using UnityEngine;
 
@@ -45,9 +46,10 @@ namespace Core
 
         private LevelBase GetLevel(int indexX, uint indexY, LevelType type)
         {
-            return _cache.HasLevel(indexX, indexY) ? 
+            return _generator.GetActiveLevelAt(indexX, indexY) ?? (
+                _cache.HasLevel(indexX, indexY) ? 
                 _generator.GetLevelAt(indexX, indexY, _cache.GetLevelData(indexX, indexY)) :
-                _generator.GetLevelAt(indexX, indexY, type);
+                _generator.GetLevelAt(indexX, indexY, type));
         }
 
         private void RemoveLevel(LevelBase level)
