@@ -23,17 +23,21 @@ namespace Player
 
         private Vector3 GetRayStartPosition(float rayDirectionX = 0)
         {
-            return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f) + Vector3.up * rayCastingOffsetY;
+            return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f) +
+                   Vector3.up * rayCastingOffsetY;
         }
 
         private bool RaycastGround(float distanceMultiplier = 1)
         {
-            return Physics2D.Raycast(GetRayStartPosition(-1), Vector2.down, raycastDistance * distanceMultiplier, groundMask) ||
-                Physics2D.Raycast(GetRayStartPosition(1), Vector2.down, raycastDistance * distanceMultiplier, groundMask);
+            return Physics2D.Raycast(GetRayStartPosition(-1), Vector2.down, raycastDistance * distanceMultiplier,
+                       groundMask) ||
+                   Physics2D.Raycast(GetRayStartPosition(1), Vector2.down, raycastDistance * distanceMultiplier,
+                       groundMask);
         }
 
         private void JumpAction()
         {
+            rigidBody.velocity = Vector2.right * rigidBody.velocity.x;
             rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
 
@@ -42,18 +46,14 @@ namespace Player
             if (rigidBody.velocity.y < -1)
             {
                 rigidBody.velocity += Vector2.up * (rigidBody.mass * Physics2D.gravity.y / 50f);
-                SlowdownFallingIfNeeded();
             }
         }
 
-        private void SlowdownFallingIfNeeded()
+        private void SlowdownFalling()
         {
-            if (!_fallingSlowed && rigidBody.velocity.y < -10 && RaycastGround(3))
-            {
-                rigidBody.AddForce(Vector2.down * (rigidBody.velocity.y * .9f), ForceMode2D.Impulse);
-                _fallingSlowed = true;
-                slowdownParticles.Emit(25);
-            }
+            rigidBody.AddForce(Vector2.down * (rigidBody.velocity.y * .9f), ForceMode2D.Impulse);
+            _fallingSlowed = true;
+            slowdownParticles.Emit(25);
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -68,8 +68,8 @@ namespace Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (!IsOnGround) return;
-            JumpAction();
+            if (IsOnGround) JumpAction();
+            else if (!_fallingSlowed && rigidBody.velocity.y < 0) SlowdownFalling();
         }
 
         public void OnDrop(InputAction.CallbackContext context)
