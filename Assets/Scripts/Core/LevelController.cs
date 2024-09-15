@@ -14,20 +14,23 @@ namespace Core
         private LevelGenerator _generator;
         private LevelCache _cache;
 
+        private int activeLevelIndexX;
+        private uint activeLevelIndexY = 999;
+
         public void Init(GameController mainController)
         {
             _generator = new LevelGenerator(levelContainer, generatorBehavior);
             _cache = new LevelCache();
-            mainController.PlayerMovedToNewLevel.AddListener(GenerateLevelAt);
         }
 
         public void GenerateInit()
         {
-            GenerateLevelsAround(_generator.GetStartingLevel());
+            _generator.GenerateStartingLevel();
         }
 
-        private void GenerateLevelAt(int indexX, uint indexY)
+        public void GenerateLevelAt(int indexX, uint indexY)
         {
+            if (activeLevelIndexX == indexX && activeLevelIndexY == indexY) return;
             _generator.GetRemovableLevels(indexX, indexY).ForEach(RemoveLevel);
             var level = GetLevel(indexX, indexY, LevelType.LeftExit);
             GenerateLevelsAround(level);
@@ -35,6 +38,8 @@ namespace Core
 
         private void GenerateLevelsAround(LevelBase level)
         {
+            activeLevelIndexX = level.IndexX;
+            activeLevelIndexY = level.IndexY;
             var indexX = level.IndexX;
             var indexY = level.IndexY;
             

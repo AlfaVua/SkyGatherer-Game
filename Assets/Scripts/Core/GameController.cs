@@ -30,6 +30,7 @@ namespace Core
 
         private void OnPlayerInNewLevel(int indexX, uint indexY)
         {
+            levelController.GenerateLevelAt(indexX, indexY);
             SetCameraTarget(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY);
         }
 

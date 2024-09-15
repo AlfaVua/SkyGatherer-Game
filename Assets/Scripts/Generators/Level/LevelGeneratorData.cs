@@ -57,7 +57,7 @@ namespace Generators.Level
 
         public LevelBase GetById(int id)
         {
-            return id == 0 ? startingLevel : prefabs[id - 1];
+            return prefabs.Find(level => level.sessionID == id) ?? startingLevel;
         }
 
         public LevelBase GetRandom(bool isBottom, LevelType type)
@@ -76,6 +76,14 @@ namespace Generators.Level
             var array = new List<LevelBase>(takeFrom);
             array.Shuffle();
             return array.Find(level => !(isBottom && level.BottomExit));
+        }
+
+        private void OnValidate()
+        {
+            _leftExitLevels.Clear();
+            _rightExitLevels.Clear();
+            _bottomExitLevels.Clear();
+            _topExitLevels.Clear();
         }
     }
 }

@@ -27,12 +27,11 @@ namespace Generators.Level
             return level;
         }
 
-        public LevelBase GetStartingLevel()
+        public void GenerateStartingLevel()
         {
             var level = InitLevel(_static.startingLevel, 0, 0);
             level.AfterFirstInit();
             _activeLevels.Add(level.Name, level);
-            return level;
         }
 
         public bool IsCoordsActive(int indexX, uint indexY)

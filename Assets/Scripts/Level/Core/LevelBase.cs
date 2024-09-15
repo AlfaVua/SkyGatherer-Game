@@ -49,7 +49,10 @@ namespace Level.Core
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            GameController.Instance.PlayerMovedToNewLevel.Invoke(IndexX, IndexY);
+            if (Utils.Utils.IsPlayer(other.gameObject))
+            {
+                GameController.Instance.PlayerMovedToNewLevel.Invoke(IndexX, IndexY);
+            }
         }
     }
 }
