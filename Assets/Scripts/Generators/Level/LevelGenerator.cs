@@ -54,7 +54,7 @@ namespace Generators.Level
         private LevelBase GetCachedLevelAndUpdate(int indexX, uint indexY)
         {
             var levelData = GetCachedLevelData(indexX, indexY);
-            var level = GetLevelDataById(levelData.levelID).GetNewInstance();
+            var level = GetLevelDataById(levelData.LevelID).GetNewInstance();
             level.Init(indexX, indexY, levelData);
             _activeLevels.Add(level.Name, level);
             return level;
