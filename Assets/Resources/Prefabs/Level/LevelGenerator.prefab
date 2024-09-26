@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8267420355196349214}
-  - component: {fileID: 6604006856583253083}
+  - component: {fileID: 9043495147425669145}
   m_Layer: 0
   m_Name: LevelGenerator
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Transform:
   - {fileID: 966478475611888559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6604006856583253083
+--- !u!114 &9043495147425669145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,8 +73,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8921922687098630176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d23bb90e0a24507a6bbedf28289a592, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a63a60a85fe4544a9a6ba20fff8997a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelContainer: {fileID: 966478475611888559}
-  generatorBehavior: {fileID: 11400000, guid: b09c30f103725b849a0efda3c7962b96, type: 2}
+  startingLevel: {fileID: 11400000, guid: 801c083d8bb0b9c4f8fcf157489367a5, type: 2}
+  levels: {fileID: 11400000, guid: ee58ba0f6311a3c49a804482ec67c905, type: 2}

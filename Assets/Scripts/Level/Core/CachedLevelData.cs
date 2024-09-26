@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace Level.Core
 {
@@ -8,6 +9,6 @@ namespace Level.Core
     {
         public List<CachedLevelObjectData> Objects;
         public string name;
-        public int sessionID;
+        [FormerlySerializedAs("sessionID")] public int levelID;
     }
 }

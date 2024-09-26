@@ -1,25 +1,25 @@
 using Core;
 using Generators;
 using Generators.Level;
+using Generators.Level.Data;
 using UnityEngine;
 
 namespace Level.Core
 {
     public class LevelBase : MonoBehaviour
     {
-        [SerializeField] private LevelSidesData sidesData;
         [SerializeField] private LevelObjectGenerator objectGenerator;
         public string Name { get; private set; }
         public int IndexX { get; private set; }
         public uint IndexY { get; private set; }
 
-        [HideInInspector] public int sessionID;
+        [HideInInspector] public LevelData staticData;
 
         public virtual CachedLevelData CachedData => new()
         {
             Objects = objectGenerator.CachedObjectsData,
             name = Name,
-            sessionID = sessionID
+            levelID = staticData.id
         };
 
         public void Init(int indexX, uint indexY)
@@ -31,21 +31,22 @@ namespace Level.Core
             objectGenerator.Init();
         }
 
+        public void Init(int indexX, uint indexY, CachedLevelData cache)
+        {
+            Init(indexX, indexY);
+            UpdateData(cache);
+        }
+
         public void AfterFirstInit()
         {
             objectGenerator.Generate();
         }
 
-        public void UpdateData(CachedLevelData cached)
+        private void UpdateData(CachedLevelData cached)
         {
             Name = cached.name;
             objectGenerator.Generate(cached.Objects);
         }
-
-        public bool LeftExit => sidesData.leftExit;
-        public bool RightExit => sidesData.rightExit;
-        public bool TopExit => sidesData.topExit;
-        public bool BottomExit => sidesData.bottomExit;
 
         private void OnTriggerEnter2D(Collider2D other)
         {

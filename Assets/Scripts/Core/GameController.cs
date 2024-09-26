@@ -8,29 +8,26 @@ namespace Core
     public class GameController : MonoBehaviour
     {
         public static GameController Instance { get; private set; }
-        
         [SerializeField] private LevelController levelController;
         [SerializeField] private FollowingCamera camera;
         [SerializeField] private PlayerMovement player;
-        
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
         private void Awake()
         {
             Instance = this;
-            levelController.Init(this);
+            levelController.Init();
             PlayerMovedToNewLevel.AddListener(OnPlayerInNewLevel);
         }
 
         private void Start()
         {
-            camera.additionalEffector = player.transform;
-            levelController.GenerateInit();
+            levelController.GenerateStartingLevel();
         }
 
         private void OnPlayerInNewLevel(int indexX, uint indexY)
         {
-            levelController.GenerateLevelAt(indexX, indexY);
+            levelController.SetNewActiveCoords(indexX, indexY);
             SetCameraTarget(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY);
         }
 

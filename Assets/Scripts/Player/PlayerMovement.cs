@@ -20,6 +20,8 @@ namespace Player
         private bool _fallingSlowed;
         private bool IsOnGround => rigidBody.velocity.y <= 0 && RaycastGround();
 
+        private float _movingVelocityX;
+
         private Vector3 GetRayStartPosition(float rayDirectionX = 0)
         {
             return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f) +
@@ -42,6 +44,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            rigidBody.velocity = new Vector2(_movingVelocityX, rigidBody.velocity.y);
             if (rigidBody.velocity.y < -1)
             {
                 rigidBody.velocity += Vector2.up * (rigidBody.mass * Physics2D.gravity.y / 50f);
@@ -62,7 +65,7 @@ namespace Player
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            rigidBody.velocity = new Vector2(context.ReadValue<Vector2>().x * moveSpeed, rigidBody.velocity.y);
+            _movingVelocityX = context.ReadValue<Vector2>().x * moveSpeed;
         }
 
         public void OnJump(InputAction.CallbackContext context)

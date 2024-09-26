@@ -1,74 +1,54 @@
-using Generators;
 using Generators.Level;
-using Level.Core;
+using Generators.Level.Data;
 using UnityEngine;
 
 namespace Core
 {
-    using Utils.TransformExtenstion;
     public class LevelController : MonoBehaviour
     {
         [SerializeField] private Transform levelContainer;
-        [SerializeField] private LevelGeneratorData generatorBehavior;
+        [SerializeField] private LevelData startingLevel;
+        [SerializeField] private LevelsList levels;
         
         private LevelGenerator _generator;
-        private LevelCache _cache;
+        private LevelDataManager _manager;
 
-        private int activeLevelIndexX;
-        private uint activeLevelIndexY = 999;
-
-        public void Init(GameController mainController)
+        public void Init()
         {
-            _generator = new LevelGenerator(levelContainer, generatorBehavior);
-            _cache = new LevelCache();
+            _manager = new LevelDataManager(levels.levels, startingLevel);
+            _generator = new LevelGenerator(_manager);
         }
 
-        public void GenerateInit()
+        public void GenerateStartingLevel()
         {
-            _generator.GenerateStartingLevel();
+            var level = startingLevel.GetNewInstance();
+            level.Init(0, 0);
+            level.transform.SetParent(levelContainer);
+            _generator.AddStartingLevel(level);
+            GenerateAround(0, 0);
         }
 
-        public void GenerateLevelAt(int indexX, uint indexY)
+        private void GenerateLevelAt(int indexX, uint indexY)
         {
-            if (activeLevelIndexX == indexX && activeLevelIndexY == indexY) return;
-            _generator.GetRemovableLevels(indexX, indexY).ForEach(RemoveLevel);
-            var level = GetLevel(indexX, indexY, LevelType.LeftExit);
-            GenerateLevelsAround(level);
+            var level = _generator.GetLevel(indexX, indexY);
+            if (!level) return;
+            level.transform.SetParent(levelContainer);
+            level.Init(indexX, indexY);
         }
 
-        private void GenerateLevelsAround(LevelBase level)
+        public void SetNewActiveCoords(int indexX, uint indexY)
         {
-            activeLevelIndexX = level.IndexX;
-            activeLevelIndexY = level.IndexY;
-            var indexX = level.IndexX;
-            var indexY = level.IndexY;
-            
-            if (level.LeftExit) GetLevel(indexX - 1, indexY, LevelType.RightExit);
-            if (level.TopExit) GetLevel(indexX, indexY + 1, LevelType.BottomExit);
-            if (level.RightExit) GetLevel(indexX + 1, indexY, LevelType.LeftExit);
-            if (level.BottomExit) GetLevel(indexX, indexY - 1, LevelType.TopExit);
+            GenerateLevelAt(indexX, indexY);
+            GenerateAround(indexX, indexY);
+            _generator.RemoveFarLevels(indexX, indexY);
         }
 
-        private LevelBase GetLevel(int indexX, uint indexY, LevelType type)
+        private void GenerateAround(int indexX, uint indexY)
         {
-            if (_generator.IsCoordsActive(indexX, indexY)) return _generator.GetActiveLevelAt(indexX, indexY);
-            return _cache.HasLevel(indexX, indexY) ? 
-                _generator.GetLevelAt(indexX, indexY, _cache.GetLevelData(indexX, indexY)) :
-                _generator.GetLevelAt(indexX, indexY, type);
-        }
-
-        private void RemoveLevel(LevelBase level)
-        {
-            _generator.RemoveLevel(level);
-            _cache.SaveLevel(level);
-            Destroy(level.gameObject);
-        }
-
-        public void Clear()
-        {
-            levelContainer.ClearChildren();
-            _cache.ClearCache();
-            _generator.Clear();
+            GenerateLevelAt(indexX + 1, indexY);
+            GenerateLevelAt(indexX - 1, indexY);
+            GenerateLevelAt(indexX, indexY + 1);
+            if (indexY != 0) GenerateLevelAt(indexX, indexY - 1);
         }
     }
 }
