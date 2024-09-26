@@ -52,7 +52,7 @@ MonoBehaviour:
   playerCollider: {fileID: 1062623578817405272}
   groundMask:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 64
   rayCastingOffsetY: -0.21
   raycastDistance: 0.3
   jumpPower: 7
