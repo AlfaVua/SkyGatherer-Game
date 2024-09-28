@@ -4,5 +4,6 @@ namespace Level.Core
     {
         public int SessionID;
         public int PlaceIndex;
+        public bool IsCollected;
     }
 }

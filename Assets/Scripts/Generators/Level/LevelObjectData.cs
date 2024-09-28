@@ -11,10 +11,12 @@ namespace Generators.Level
         [SerializeField] private List<ResourceData> drops;
         [SerializeField] private LevelObjectBase prefab;
         [SerializeField] private Sprite view;
+        [SerializeField] private Sprite collectedView;
         [SerializeField] private Rarity rarity;
 
         public Rarity Rarity => rarity;
         public Sprite View => view;
+        public Sprite CollectedView => collectedView;
 
         public LevelObjectBase GetObjectInstance(Transform parent)
         {

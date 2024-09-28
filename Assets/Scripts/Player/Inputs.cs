@@ -145,6 +145,34 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interactable"",
+            ""id"": ""a4be3d0c-0fc1-4cd6-9b6a-5bd13a930a09"",
+            ""actions"": [
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""14ad2c41-f12b-4819-be56-351a00e41f55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""cc03387c-e853-44aa-8e04-eaef123d6db8"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -154,6 +182,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
+        // Interactable
+        m_Interactable = asset.FindActionMap("Interactable", throwIfNotFound: true);
+        m_Interactable_Interact = m_Interactable.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,10 +304,60 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Interactable
+    private readonly InputActionMap m_Interactable;
+    private List<IInteractableActions> m_InteractableActionsCallbackInterfaces = new List<IInteractableActions>();
+    private readonly InputAction m_Interactable_Interact;
+    public struct InteractableActions
+    {
+        private @Inputs m_Wrapper;
+        public InteractableActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Interact => m_Wrapper.m_Interactable_Interact;
+        public InputActionMap Get() { return m_Wrapper.m_Interactable; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractableActions set) { return set.Get(); }
+        public void AddCallbacks(IInteractableActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InteractableActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InteractableActionsCallbackInterfaces.Add(instance);
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+        }
+
+        private void UnregisterCallbacks(IInteractableActions instance)
+        {
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+        }
+
+        public void RemoveCallbacks(IInteractableActions instance)
+        {
+            if (m_Wrapper.m_InteractableActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInteractableActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InteractableActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InteractableActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InteractableActions @Interactable => new InteractableActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
+    }
+    public interface IInteractableActions
+    {
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

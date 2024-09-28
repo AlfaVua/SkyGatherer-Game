@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Level.Core;
@@ -14,17 +15,18 @@ namespace Generators.Level
         private List<LevelObjectBase> _objects;
 
         public List<CachedLevelObjectData> CachedObjectsData => _objects?.Select(obj => obj.CachedData).ToList();
-        
+
         public void Init()
         {
             if (objectPlaces.Count == 0) return;
-            _objects = new List<LevelObjectBase>();
+            _objects ??= new List<LevelObjectBase>();
             config.Init();
         }
 
         public void Generate()
         {
             var i = -1;
+            _objects?.Clear();
             objectPlaces.ForEach(place =>
             {
                 i++;
@@ -38,6 +40,7 @@ namespace Generators.Level
 
         public void Generate(List<CachedLevelObjectData> objects)
         {
+            _objects?.Clear();
             objects?.ForEach(obj =>
             {
                 var objectData = config.GetObjectById(obj.SessionID);

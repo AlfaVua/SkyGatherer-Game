@@ -92,6 +92,7 @@ namespace Generators.Level
             if (foundNeighbors.Count == 0) return null;
             var level = _dataManager.GetLevelData(foundNeighbors.GetRandom()).GetNewInstance();
             level.Init(indexX, indexY);
+            level.AfterFirstInit();
             _activeLevels.Add(level.Name, level);
             return level;
         }
