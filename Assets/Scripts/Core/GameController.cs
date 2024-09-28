@@ -10,12 +10,13 @@ namespace Core
         public static GameController Instance { get; private set; }
         [SerializeField] private LevelController levelController;
         [SerializeField] private FollowingCamera camera;
-        [SerializeField] private PlayerMovement player;
+        [SerializeField] private PlayerHandler player;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
         private void Awake()
         {
             Instance = this;
+            player.Init();
             levelController.Init();
             PlayerMovedToNewLevel.AddListener(OnPlayerInNewLevel);
         }

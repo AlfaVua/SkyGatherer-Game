@@ -1,6 +1,7 @@
 using System.Collections;
 using Core;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Player
@@ -16,11 +17,19 @@ namespace Player
         [SerializeField] private float moveSpeed = 1;
         [SerializeField] [Min(0)] private float rayDistanceFromCenter = .7f;
         [SerializeField] private ParticleSystem slowdownParticles;
+        
+        public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
         private bool _fallingSlowed;
         private bool IsOnGround => rigidBody.velocity.y <= 0 && RaycastGround();
 
         private float _movingVelocityX;
+        private float _fallDamageThreshold;
+
+        public void Init(PlayerData playerData)
+        {
+            _fallDamageThreshold = playerData.fallDamageThreshold;
+        }
 
         private Vector3 GetRayStartPosition(float rayDirectionX = 0)
         {
@@ -61,6 +70,7 @@ namespace Player
         private void OnCollisionEnter2D(Collision2D other)
         {
             _fallingSlowed = false;
+            if (other.relativeVelocity.y > _fallDamageThreshold && IsOnGround) OnFellFromHeight(other.relativeVelocity.y);
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -104,6 +114,11 @@ namespace Player
         private void OnDisable()
         {
             InputController.Inputs.Player.RemoveCallbacks(this);
+        }
+        
+        private void OnFellFromHeight(float fallSpeed)
+        {
+            OnFellFromHeightSignal.Invoke(fallSpeed - _fallDamageThreshold / 3);
         }
     }
 }
