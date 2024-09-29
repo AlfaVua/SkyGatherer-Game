@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5261622674665880559}
   - component: {fileID: 1670278795077820527}
+  - component: {fileID: 7254934560565152100}
   - component: {fileID: 7229322560117192611}
   - component: {fileID: 4299670562065739201}
   - component: {fileID: 1062623578817405272}
@@ -51,6 +52,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 7229322560117192611}
   playerData: {fileID: 11400000, guid: de312c9d12367034d9f53e904948d387, type: 2}
+  healthComponentCore: {fileID: 7254934560565152100}
+--- !u!114 &7254934560565152100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557411087414179913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c76bedf42b048a4ab05339ee91a521e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7229322560117192611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +82,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  rayCastingOffsetY: 0
   raycastDistance: 0.52
   jumpPower: 7
   moveSpeed: 5

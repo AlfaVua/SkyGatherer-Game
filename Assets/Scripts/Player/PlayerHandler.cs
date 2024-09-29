@@ -1,3 +1,4 @@
+using Components.Component;
 using UnityEngine;
 
 namespace Player
@@ -6,19 +7,18 @@ namespace Player
     {
         [SerializeField] private PlayerMovement movement;
         [SerializeField] private PlayerData playerData;
-        private PlayerHealth _healthCore;
+        [SerializeField] private HealthComponent healthComponentCore;
 
         public void Init()
         {
-            _healthCore = new PlayerHealth(playerData);
+            healthComponentCore.Init(playerData.maxHealth);
             movement.Init(playerData);
             movement.OnFellFromHeightSignal.AddListener(OnFellFromHeight);
         }
 
-
         private void OnFellFromHeight(float damageTaken)
         {
-            _healthCore.TakeDamage(damageTaken);
+            healthComponentCore.TakeDamage(damageTaken);
         }
     }
 }
