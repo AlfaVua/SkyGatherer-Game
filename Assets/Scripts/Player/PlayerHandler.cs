@@ -1,6 +1,6 @@
 using Components.Component;
+using Core;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -29,7 +29,7 @@ namespace Player
         {
             shakeOnDamage.Play(damageTaken / 100, .1f);
             takeDamageParticles.Emit(25);
-            if (healthComponentCore.CurrentHealth <= 0) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (healthComponentCore.CurrentHealth <= 0) GameController.InitLevelLose();
         }
     }
 }

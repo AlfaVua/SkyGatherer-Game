@@ -2,6 +2,7 @@ using System;
 using Player;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Core
 {
@@ -72,6 +73,11 @@ namespace Core
         private void OnDisable()
         {
             InputController.Inputs.Disable();
+        }
+
+        public static void InitLevelLose()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
