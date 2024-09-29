@@ -116,7 +116,8 @@ namespace Player
         
         private void OnFellFromHeight(float fallSpeed)
         {
-            OnFellFromHeightSignal.Invoke(fallSpeed - _fallDamageThreshold / 3);
+            var damage = (fallSpeed - _fallDamageThreshold * .9f) * .78f;
+            OnFellFromHeightSignal.Invoke(damage * damage);
         }
     }
 }
