@@ -11,7 +11,6 @@ namespace Player
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private Collider2D playerCollider;
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] private float rayCastingOffsetY;
         [SerializeField] private float raycastDistance = 1;
         [SerializeField] private float jumpPower = 7;
         [SerializeField] private float moveSpeed = 1;
@@ -33,8 +32,7 @@ namespace Player
 
         private Vector3 GetRayStartPosition(float rayDirectionX = 0)
         {
-            return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f) +
-                   Vector3.up * rayCastingOffsetY;
+            return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f);
         }
 
         private bool RaycastGround(float distanceMultiplier = 1)

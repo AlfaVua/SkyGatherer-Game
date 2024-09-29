@@ -18,5 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9355887457d7f154381e9e8bc0c9f37a, type: 2}
   - {fileID: 11400000, guid: d3f5b82bc6334a840a734b6810b4bdf2, type: 2}
   - {fileID: 11400000, guid: 1a583ef2dce4aad498e55078f76f319e, type: 2}
-  spawnChance: 0.5
+  spawnChance: 0.65
   rarityConfig: {fileID: 11400000, guid: e6e0a3c542d98844ba8b5f0acda5847b, type: 2}

@@ -68,8 +68,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  rayCastingOffsetY: -0.21
-  raycastDistance: 0.3
+  rayCastingOffsetY: 0
+  raycastDistance: 0.52
   jumpPower: 7
   moveSpeed: 5
   rayDistanceFromCenter: 0.7
