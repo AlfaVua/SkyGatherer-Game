@@ -1,12 +1,11 @@
 using System.Collections;
-using Core;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Player
 {
-    public class PlayerMovement : MonoBehaviour, Inputs.IPlayerActions
+    public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private Collider2D playerCollider;
@@ -71,19 +70,18 @@ namespace Player
             if (other.relativeVelocity.y > _fallDamageThreshold && IsOnGround) OnFellFromHeight(other.relativeVelocity.y);
         }
 
-        public void OnMove(InputAction.CallbackContext context)
+        public void Move(float direction)
         {
-            _movingVelocityX = context.ReadValue<Vector2>().x * moveSpeed;
+            _movingVelocityX = direction * moveSpeed;
         }
 
-        public void OnJump(InputAction.CallbackContext context)
+        public void Jump()
         {
-            if (context.canceled) return;
             if (IsOnGround) JumpAction();
             else if (!_fallingSlowed && rigidBody.velocity.y < 0) SlowdownFalling();
         }
 
-        public void OnDrop(InputAction.CallbackContext context)
+        public void Drop()
         {
             playerCollider.enabled = false;
             rigidBody.AddForce(Vector2.down, ForceMode2D.Impulse);
@@ -102,16 +100,6 @@ namespace Player
             var positionRight = GetRayStartPosition(1);
             Gizmos.DrawLine(positionLeft, positionLeft + Vector3.down * raycastDistance);
             Gizmos.DrawLine(positionRight, positionRight + Vector3.down * raycastDistance);
-        }
-
-        private void OnEnable()
-        {
-            InputController.Inputs.Player.AddCallbacks(this);
-        }
-
-        private void OnDisable()
-        {
-            InputController.Inputs.Player.RemoveCallbacks(this);
         }
         
         private void OnFellFromHeight(float fallSpeed)
