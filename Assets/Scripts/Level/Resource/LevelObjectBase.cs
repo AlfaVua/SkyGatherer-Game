@@ -1,4 +1,5 @@
 using Components.Component;
+using Core;
 using Generators.Level;
 using Level.Core;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Level.Resource
     {
         [SerializeField] private SpriteRenderer view;
         [SerializeField] private InteractableObject interactionTarget;
+        [SerializeField] private ParticleSystem collectEffect;
 
         private LevelObjectData _static;
         private bool _isCollected;
@@ -45,20 +47,32 @@ namespace Level.Resource
         
         private void OnPlayerInteractionEnded()
         {
+            Collect();
+        }
+
+        private void Collect()
+        {
             _isCollected = true;
             UpdateView();
+            _static.Drops.ForEach(resource =>
+            {
+                GameController.Instance.Player.AddResource(resource.staticID);
+            });
+            collectEffect.Emit(20);
         }
 
         private void OnEnable()
         {
-            interactionTarget?.OnInteractionStarted.AddListener(OnPlayerInteractionStarted);
-            interactionTarget?.OnInteractionEnded.AddListener(OnPlayerInteractionEnded);
+            if (!interactionTarget) return;
+            interactionTarget.OnInteractionStarted.AddListener(OnPlayerInteractionStarted);
+            interactionTarget.OnInteractionEnded.AddListener(OnPlayerInteractionEnded);
         }
         
         private void OnDisable()
         {
-            interactionTarget?.OnInteractionStarted.RemoveListener(OnPlayerInteractionStarted);
-            interactionTarget?.OnInteractionEnded.RemoveListener(OnPlayerInteractionEnded);
+            if (!interactionTarget) return;
+            interactionTarget.OnInteractionStarted.RemoveListener(OnPlayerInteractionStarted);
+            interactionTarget.OnInteractionEnded.RemoveListener(OnPlayerInteractionEnded);
         }
     }
 }

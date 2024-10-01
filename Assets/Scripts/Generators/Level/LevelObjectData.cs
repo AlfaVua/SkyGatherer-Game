@@ -17,6 +17,7 @@ namespace Generators.Level
         public Rarity Rarity => rarity;
         public Sprite View => view;
         public Sprite CollectedView => collectedView;
+        public List<ResourceData> Drops => drops;
 
         public LevelObjectBase GetObjectInstance(Transform parent)
         {

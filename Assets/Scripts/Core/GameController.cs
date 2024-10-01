@@ -16,6 +16,7 @@ namespace Core
         [SerializeField] private ResourceManager resourceManager;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
+        public PlayerHandler Player => player;
         
         public ResourceData GetResourceById(uint id) => resourceManager.GetResourceById(id);
         private void Awake()

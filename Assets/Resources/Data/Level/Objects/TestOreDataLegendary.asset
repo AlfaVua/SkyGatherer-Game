@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970e7521d08d47eabdbd74d8caf51a14, type: 3}
   m_Name: TestOreDataLegendary
   m_EditorClassIdentifier: 
-  drops: []
+  drops:
+  - {fileID: 11400000, guid: 7db6e8c9b7194da4bb6ca81a55acfac5, type: 2}
   prefab: {fileID: 2228693644506963875, guid: f97f01b6ee4fbd14a8e469d2af5d8e85, type: 3}
   view: {fileID: 21300000, guid: dddbecca1f861d7439b458826d30f544, type: 3}
   collectedView: {fileID: 21300000, guid: ca7a907461a908442b8fd37f01abef99, type: 3}
