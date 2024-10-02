@@ -46,6 +46,7 @@ namespace Player
         private void OnUIVisibilityChanged(bool visible)
         {
             _disableMovement = visible;
+            if (!visible) _movement.Move(0);
         }
 
         private void OnEnable()
