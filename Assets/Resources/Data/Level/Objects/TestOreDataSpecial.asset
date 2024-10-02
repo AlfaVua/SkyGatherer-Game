@@ -17,3 +17,4 @@ MonoBehaviour:
   view: {fileID: 21300000, guid: e01afd200d4aad6438d10721f1de4c72, type: 3}
   collectedView: {fileID: 21300000, guid: ca7a907461a908442b8fd37f01abef99, type: 3}
   rarity: 3
+  collectionExperience: 250

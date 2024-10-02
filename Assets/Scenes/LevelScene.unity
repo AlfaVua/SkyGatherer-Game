@@ -439,6 +439,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c76bedf42b048a4ab05339ee91a521e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &895686264 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3186831880647878831, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
+  m_PrefabInstance: {fileID: 895686260}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722885613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6ac680cdce45b3a0d2423840282c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1006797073
 GameObject:
   m_ObjectHideFlags: 0
@@ -5671,6 +5682,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1230031522402195951, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
+      propertyPath: playerExperienceController
+      value: 
+      objectReference: {fileID: 895686264}
     - target: {fileID: 1642635536966427596, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0

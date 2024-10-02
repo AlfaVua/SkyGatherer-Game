@@ -1,5 +1,6 @@
 using Components.Component;
 using Core;
+using Generators.Level;
 using UnityEngine;
 
 namespace Player
@@ -12,13 +13,15 @@ namespace Player
         [SerializeField] private CameraShake shakeOnDamage;
         [SerializeField] private ParticleSystem takeDamageParticles;
         [SerializeField] private PlayerInputController inputController;
-        [SerializeField] private PlayerInventory inventory;
+        [SerializeField] private PlayerExperienceController experienceController;
+        [SerializeField] private CollectingController collectingController;
 
         public void Init()
         {
+            collectingController.Init();
             healthComponentCore.Init(playerData.maxHealth);
-            inventory.Init();
             movement.Init(playerData);
+            experienceController.Init();
             movement.OnFellFromHeightSignal.AddListener(OnFellFromHeight);
             inputController.Init(movement, this);
         }
@@ -35,10 +38,11 @@ namespace Player
             takeDamageParticles.Emit(25);
             if (healthComponentCore.CurrentHealth <= 0) GameController.InitLevelLose();
         }
-        
-        public void AddResource(uint id, int amount = 1)
+
+        public void OnCollectResource(LevelObjectData collectable)
         {
-            inventory.AddResource(id, amount);
+            collectingController.Collect(collectable);
+            experienceController.AddExperience(collectable.CollectionExperience);
         }
     }
 }

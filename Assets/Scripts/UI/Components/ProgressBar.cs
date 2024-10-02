@@ -64,5 +64,10 @@ namespace UI.Components
                 SetValueInternal(value);
             }
         }
+
+        public void SetMaxValue(float maxValue)
+        {
+            this.maxValue = maxValue;
+        }
     }
 }

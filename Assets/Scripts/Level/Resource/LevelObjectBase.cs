@@ -54,11 +54,8 @@ namespace Level.Resource
         {
             _isCollected = true;
             UpdateView();
-            _static.Drops.ForEach(resource =>
-            {
-                GameController.Instance.Player.AddResource(resource.staticID);
-            });
             collectEffect.Emit(20);
+            GameController.Instance.Player.OnCollectResource(_static);
         }
 
         private void OnEnable()

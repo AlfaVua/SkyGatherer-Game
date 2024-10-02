@@ -13,11 +13,13 @@ namespace Generators.Level
         [SerializeField] private Sprite view;
         [SerializeField] private Sprite collectedView;
         [SerializeField] private Rarity rarity;
+        [SerializeField] private float collectionExperience;
 
         public Rarity Rarity => rarity;
         public Sprite View => view;
         public Sprite CollectedView => collectedView;
         public List<ResourceData> Drops => drops;
+        public float CollectionExperience => collectionExperience;
 
         public LevelObjectBase GetObjectInstance(Transform parent)
         {

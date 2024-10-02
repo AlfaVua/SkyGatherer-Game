@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7254934560565152100}
   - component: {fileID: 7229322560117192611}
   - component: {fileID: 7888285217626039019}
+  - component: {fileID: 3186831880647878831}
+  - component: {fileID: 1006460341625656352}
   - component: {fileID: 4299670562065739201}
   - component: {fileID: 1062623578817405272}
   - component: {fileID: 3596778873890406221}
@@ -58,7 +60,8 @@ MonoBehaviour:
   shakeOnDamage: {fileID: 0}
   takeDamageParticles: {fileID: 5702511471155262330}
   inputController: {fileID: 7888285217626039019}
-  inventory: {fileID: 11400000, guid: 1bbc2ca536ca73d4da6c673e1e79cf7f, type: 2}
+  experienceController: {fileID: 3186831880647878831}
+  collectingController: {fileID: 1006460341625656352}
 --- !u!114 &7254934560565152100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +108,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e4e697470642e4b3e4d7aa9db010ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3186831880647878831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557411087414179913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6ac680cdce45b3a0d2423840282c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1006460341625656352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557411087414179913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dba004386b241aea954d8b9c5fe11e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 1bbc2ca536ca73d4da6c673e1e79cf7f, type: 2}
 --- !u!50 &4299670562065739201
 Rigidbody2D:
   serializedVersion: 4
