@@ -22,8 +22,14 @@ namespace Player
             healthComponentCore.Init(playerData.maxHealth);
             movement.Init(playerData);
             experienceController.Init();
-            movement.OnFellFromHeightSignal.AddListener(OnFellFromHeight);
             inputController.Init(movement, this);
+            AddListeners();
+        }
+
+        private void AddListeners()
+        {
+            movement.OnFellFromHeightSignal.AddListener(OnFellFromHeight);
+            experienceController.OnLevelChanged.AddListener(OnLevelUp);
         }
 
         private void OnFellFromHeight(float damageTaken)
@@ -43,6 +49,11 @@ namespace Player
         {
             collectingController.Collect(collectable);
             experienceController.AddExperience(collectable.CollectionExperience);
+        }
+
+        private void OnLevelUp(uint level, float nextExperience)
+        {
+            
         }
     }
 }

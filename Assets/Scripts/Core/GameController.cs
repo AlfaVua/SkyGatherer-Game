@@ -1,6 +1,7 @@
 using System;
 using Generators.Resource;
 using Player;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,7 @@ namespace Core
         [SerializeField] private FollowingCamera camera;
         [SerializeField] private PlayerHandler player;
         [SerializeField] private ResourceManager resourceManager;
+        [SerializeField] private UIController uiController;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
         public PlayerHandler Player => player;
@@ -21,6 +23,7 @@ namespace Core
         public ResourceData GetResourceById(uint id) => resourceManager.GetResourceById(id);
         private void Awake()
         {
+            UISignal.Clear();
             Instance = this;
             InitResources();
             AddListeners();
@@ -28,6 +31,7 @@ namespace Core
 
         private void InitResources()
         {
+            uiController.Init();
             player.Init();
             resourceManager.Init();
             levelController.Init();

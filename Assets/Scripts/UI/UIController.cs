@@ -8,16 +8,25 @@ namespace UI
 
         private UIBase _activeUI;
 
+        public void Init()
+        {
+            UISignal.ToggleInventory.AddListener(ToggleInventory);
+        }
+
         private void ToggleUI(UIBase ui)
         {
             if (_activeUI) _activeUI.Hide();
             if (ui == _activeUI)
             {
                 _activeUI = null;
+                UISignal.OnOverlayUIChanged.Invoke(false);
                 return;
             }
+            var isFirstOpened = !_activeUI;
             ui.Show();
             _activeUI = ui;
+            if (isFirstOpened)
+                UISignal.OnOverlayUIChanged.Invoke(true);
         }
 
         private void ToggleInventory()
@@ -25,12 +34,7 @@ namespace UI
             ToggleUI(inventoryUI);
         }
 
-        private void OnEnable()
-        {
-            UISignal.ToggleInventory.AddListener(ToggleInventory);
-        }
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             UISignal.ToggleInventory.RemoveListener(ToggleInventory);
         }

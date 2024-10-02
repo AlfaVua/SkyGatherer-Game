@@ -10,25 +10,31 @@ namespace Player
         private PlayerMovement _movement;
         private PlayerHandler _handler;
 
+        private bool _disableMovement = false;
+
         public void Init(PlayerMovement movement, PlayerHandler handler)
         {
+            UISignal.OnOverlayUIChanged.AddListener(OnUIVisibilityChanged);
+            AddListeners();
             _movement = movement;
             _handler = handler;
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
+            if (_disableMovement) return;
             _movement.Move(context.ReadValue<Vector2>().x);
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (context.canceled) return;
+            if (_disableMovement || context.canceled) return;
             _movement.Jump();
         }
 
         public void OnDrop(InputAction.CallbackContext context)
         {
+            if (_disableMovement) return;
             _movement.Drop();
         }
 
@@ -37,12 +43,27 @@ namespace Player
             UISignal.ToggleInventory.Invoke();
         }
 
+        private void OnUIVisibilityChanged(bool visible)
+        {
+            _disableMovement = visible;
+        }
+
         private void OnEnable()
         {
-            InputController.Inputs.Player.AddCallbacks(this);
+            AddListeners();
         }
 
         private void OnDisable()
+        {
+            RemoveListeners();
+        }
+
+        private void AddListeners()
+        {
+            InputController.Inputs.Player.AddCallbacks(this);
+        }
+        
+        private void RemoveListeners()
         {
             InputController.Inputs.Player.RemoveCallbacks(this);
         }
