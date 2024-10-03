@@ -8,6 +8,7 @@ namespace Core
     {
         [SerializeField] private Transform levelContainer;
         [SerializeField] private LevelData startingLevel;
+        [SerializeField] private LevelData emptyLevel;
         [SerializeField] private LevelsList levels;
         
         private LevelGenerator _generator;
@@ -15,7 +16,7 @@ namespace Core
 
         public void Init()
         {
-            _manager = new LevelDataManager(levels.levels, startingLevel);
+            _manager = new LevelDataManager(levels.levels, startingLevel, emptyLevel);
             _generator = new LevelGenerator(_manager);
         }
 
@@ -50,9 +51,11 @@ namespace Core
             GenerateLevelAt(indexX, indexY + 1);
             GenerateLevelAt(indexX - 1, indexY + 1);
             GenerateLevelAt(indexX + 1, indexY + 1);
-            if (indexY != 0) GenerateLevelAt(indexX, indexY - 1);
-            if (indexY != 0) GenerateLevelAt(indexX - 1, indexY - 1);
-            if (indexY != 0) GenerateLevelAt(indexX + 1, indexY - 1);
+
+            if (indexY == 0) return;
+            GenerateLevelAt(indexX, indexY - 1);
+            GenerateLevelAt(indexX - 1, indexY - 1);
+            GenerateLevelAt(indexX + 1, indexY - 1);
         }
     }
 }

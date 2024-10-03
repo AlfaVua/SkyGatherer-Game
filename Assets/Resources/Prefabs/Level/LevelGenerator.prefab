@@ -78,4 +78,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelContainer: {fileID: 966478475611888559}
   startingLevel: {fileID: 11400000, guid: 801c083d8bb0b9c4f8fcf157489367a5, type: 2}
+  emptyLevel: {fileID: 11400000, guid: 9e7a21d47640610449f072dc64966d8d, type: 2}
   levels: {fileID: 11400000, guid: ee58ba0f6311a3c49a804482ec67c905, type: 2}

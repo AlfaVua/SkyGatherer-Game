@@ -89,7 +89,7 @@ namespace Generators.Level
         {
             var neighbors = GetCoordNeighbors(indexX, indexY);
             var foundNeighbors = _dataManager.FindLevelsWithMatchingNeighbors(neighbors, indexY == 0);
-            if (foundNeighbors.Count == 0) return null;
+            if (foundNeighbors.Count == 0) return _dataManager.GetEmptyLevel().GetNewInstance();
             var level = _dataManager.GetLevelData(foundNeighbors.GetRandom()).GetNewInstance();
             level.Init(indexX, indexY);
             level.AfterFirstInit();

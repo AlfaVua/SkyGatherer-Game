@@ -5,22 +5,22 @@ using Level.Core;
 
 namespace Generators.Level
 {
-    public class LevelDataManager
+    public class LevelDataManager // reserved: 0 - starting level, 1 - empty level
     {
         private Dictionary<int, LevelData> _levels;
         private Dictionary<int, LevelRelationData> _relations;
 
-        public LevelDataManager(IReadOnlyCollection<LevelData> levels, LevelData starting)
+        public LevelDataManager(IReadOnlyCollection<LevelData> levels, LevelData starting, LevelData emptyLevel)
         {
             _levels = new Dictionary<int, LevelData>();
             _relations = new Dictionary<int, LevelRelationData>();
-            InitLevelMap(levels, starting);
+            InitLevelMap(levels, starting, emptyLevel);
             InitRelations();
         }
 
-        private void InitLevelMap(IReadOnlyCollection<LevelData> levels, LevelData starting)
+        private void InitLevelMap(IReadOnlyCollection<LevelData> levels, LevelData starting, LevelData emptyLevel)
         {
-            var l = new List<LevelData> { starting };
+            var l = new List<LevelData> { starting, emptyLevel };
             l.AddRange(levels);
             _levels = l.Select((level, i) => new { level, i })
                 .ToDictionary(x => x.level.id = x.i, x => x.level);
@@ -29,9 +29,9 @@ namespace Generators.Level
         private void InitRelations()
         {
             var allLevels = _levels.Values.ToList();
-            var availableLevels = _levels.Values.Skip(1).ToList();
+            var activeLevels = _levels.Values.Skip(2).ToList();
             _relations = allLevels.ToDictionary(level => level.id, _ => new LevelRelationData());
-            allLevels.ForEach(level => FillRelations(level, _relations[level.id], availableLevels));
+            allLevels.ForEach(level => FillRelations(level, _relations[level.id], activeLevels));
         }
 
         private void FillRelations(LevelData level, LevelRelationData relation, List<LevelData> levels)
@@ -80,6 +80,11 @@ namespace Generators.Level
             var matchingIds = neighbourIds.First();
             if (neighbourIds.Count == 1) return matchingIds;
             return neighbourIds.Skip(1).Aggregate(matchingIds, (current, ids) => current.Intersect(ids).ToList());
+        }
+
+        public LevelData GetEmptyLevel()
+        {
+            return GetLevelData(1);
         }
     }
 }
