@@ -12,6 +12,7 @@ namespace Player.Modifiers
                 PlayerModifierType.JumpHeight => new PlayerJumpHeightModifier(data),
                 PlayerModifierType.MaxHpIncrease => new PlayerMaxHealthModifier(data),
                 PlayerModifierType.Heal => new PlayerHealModifier(data),
+                PlayerModifierType.ExperienceMultiplier => new PlayerExperienceGainedModifier(data),
                 _ => null
             };
         }

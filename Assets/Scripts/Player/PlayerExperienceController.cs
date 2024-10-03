@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -10,6 +11,8 @@ namespace Player
         private uint _currentLevel = 1;
         private float _nextLevelXp = 100;
         private float _currentXp = 0;
+        
+        [HideInInspector] public float expModifier = 1;
 
         public void Init()
         {
@@ -17,7 +20,7 @@ namespace Player
 
         public void AddExperience(float amount)
         {
-            _currentXp += amount;
+            _currentXp += amount * expModifier;
             TryLevelUp();
             OnXpChanged.Invoke(_currentXp);
         }

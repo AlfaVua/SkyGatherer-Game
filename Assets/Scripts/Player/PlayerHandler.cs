@@ -19,6 +19,7 @@ namespace Player
         
         public PlayerMovement PlayerMovement => movement;
         public HealthComponent PlayerHealth => healthComponentCore;
+        public PlayerExperienceController ExperienceController => experienceController;
 
         public void Init()
         {

@@ -5,5 +5,6 @@ namespace Player.Modifiers.Data
         JumpHeight,
         MaxHpIncrease,
         Heal,
+        ExperienceMultiplier,
     }
 }

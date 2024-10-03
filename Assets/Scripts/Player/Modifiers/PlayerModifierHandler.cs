@@ -20,6 +20,7 @@ namespace Player.Modifiers
 
         public PlayerMovement PlayerMovement => _playerHandler.PlayerMovement;
         public HealthComponent PlayerHealth => _playerHandler.PlayerHealth;
+        public PlayerExperienceController ExperienceController => _playerHandler.ExperienceController;
 
         public void ApplyModifier(PlayerModifierData modifier)
         {
