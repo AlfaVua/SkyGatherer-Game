@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -24,8 +23,11 @@ namespace Player
         private float _movingVelocityX;
         private float _fallDamageThreshold;
 
+        [HideInInspector] public float jumpHeightMultiplier;
+
         public void Init(PlayerData playerData)
         {
+            jumpHeightMultiplier = 1;
             _fallDamageThreshold = playerData.fallDamageThreshold;
         }
 
@@ -45,7 +47,7 @@ namespace Player
         private void JumpAction()
         {
             rigidBody.velocity = Vector2.right * rigidBody.velocity.x;
-            rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            rigidBody.AddForce(jumpPower * jumpHeightMultiplier * Vector2.up, ForceMode2D.Impulse);
         }
 
         private void FixedUpdate()

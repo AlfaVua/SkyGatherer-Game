@@ -16,8 +16,9 @@ namespace UI
             });
         }
         
-        private void OnCardClicked()
+        private void OnCardClicked(UpgradeCard card)
         {
+            card.Apply();
             UISignal.ToggleLevelUp.Invoke();
         }
 
@@ -25,7 +26,10 @@ namespace UI
         {
             cardList.ForEach(card =>
             {
-                card.OnClicked.AddListener(OnCardClicked);
+                card.OnClicked.AddListener(() =>
+                {
+                    OnCardClicked(card);
+                });
             });
         }
         
@@ -33,7 +37,7 @@ namespace UI
         {
             cardList.ForEach(card =>
             {
-                card.OnClicked.RemoveListener(OnCardClicked);
+                card.OnClicked.RemoveAllListeners();
             });
         }
     }

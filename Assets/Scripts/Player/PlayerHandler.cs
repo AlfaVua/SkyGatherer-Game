@@ -16,6 +16,8 @@ namespace Player
         [SerializeField] private PlayerInputController inputController;
         [SerializeField] private PlayerExperienceController experienceController;
         [SerializeField] private CollectingController collectingController;
+        
+        public PlayerMovement PlayerMovement => movement;
 
         public void Init()
         {

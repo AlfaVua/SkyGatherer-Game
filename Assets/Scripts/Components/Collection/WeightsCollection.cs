@@ -40,5 +40,13 @@ namespace Components.Collection
             }
             return weights[^1].data;
         }
+
+        public void ForEach(Action<TK> action)
+        {
+            weights.ForEach(weight =>
+            {
+                action(weight.data);
+            });
+        }
     }
 }

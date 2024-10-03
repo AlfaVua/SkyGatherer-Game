@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using Components.Component;
 using Generators.Resource;
 using Player;
+using Player.Modifiers;
+using Player.Modifiers.Data;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,9 +20,13 @@ namespace Core
         [SerializeField] private PlayerHandler player;
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private UIController uiController;
+        [SerializeField] private PlayerModifiersList modifiers;
+        
+        private PlayerModifierHandler _modifierHandler;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
         public PlayerHandler Player => player;
+        public PlayerModifierHandler ModifierHandler => _modifierHandler;
         
         public ResourceData GetResourceById(uint id) => resourceManager.GetResourceById(id);
         private void Awake()
@@ -32,6 +40,7 @@ namespace Core
         private void InitResources()
         {
             uiController.Init();
+            _modifierHandler = new PlayerModifierHandler(modifiers, player);
             player.Init();
             resourceManager.Init();
             levelController.Init();
