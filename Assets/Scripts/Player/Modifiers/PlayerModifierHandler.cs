@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Components.Component;
 using Player.Modifiers.Data;
 
 namespace Player.Modifiers
@@ -18,6 +19,7 @@ namespace Player.Modifiers
         }
 
         public PlayerMovement PlayerMovement => _playerHandler.PlayerMovement;
+        public HealthComponent PlayerHealth => _playerHandler.PlayerHealth;
 
         public void ApplyModifier(PlayerModifierData modifier)
         {

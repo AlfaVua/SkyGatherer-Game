@@ -1,6 +1,6 @@
 using Player.Modifiers.Data;
 
-namespace Player.Modifiers
+namespace Player.Modifiers.Modifications
 {
     public class PlayerJumpHeightModifier : PlayerModifiersBase
     {

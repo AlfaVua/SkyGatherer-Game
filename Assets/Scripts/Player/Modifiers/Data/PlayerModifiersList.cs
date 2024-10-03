@@ -15,6 +15,7 @@ namespace Player.Modifiers.Data
             {
                 modifier.id = id++;
             });
+            modifiers.UpdateWeights();
         }
     }
 }

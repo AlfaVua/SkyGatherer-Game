@@ -1,4 +1,5 @@
 using Player.Modifiers.Data;
+using Player.Modifiers.Modifications;
 
 namespace Player.Modifiers
 {
@@ -8,7 +9,9 @@ namespace Player.Modifiers
         {
             return data.Type switch
             {
-                PlayerModifierType.JumpHeight => new PlayerJumpHeightModifier(data),    
+                PlayerModifierType.JumpHeight => new PlayerJumpHeightModifier(data),
+                PlayerModifierType.MaxHpIncrease => new PlayerMaxHealthModifier(data),
+                PlayerModifierType.Heal => new PlayerHealModifier(data),
                 _ => null
             };
         }

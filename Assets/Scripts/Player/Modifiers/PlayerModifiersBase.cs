@@ -13,7 +13,7 @@ namespace Player.Modifiers
             _staticData = staticData;
         }
 
-        public void IncreaseModifier()
+        public virtual void IncreaseModifier()
         {
             _modifier++;
         }

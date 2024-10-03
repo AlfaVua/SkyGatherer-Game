@@ -11,6 +11,7 @@ namespace UI.Components
 
         private void Start()
         {
+            progressBar.SetMaxValue(target.CurrentHealth);
             progressBar.SetValue(target.CurrentHealth);
         }
 
@@ -18,15 +19,22 @@ namespace UI.Components
         {
             progressBar.SetValue(newValue, true);
         }
+
+        private void UpdateMaxValue(float newValue)
+        {
+            progressBar.SetMaxValue(newValue);
+        }
         
         private void OnEnable()
         {
             target.OnHealthChanged.AddListener(UpdateValue);
+            target.OnMaxHealthChanged.AddListener(UpdateMaxValue);
         }
         
         private void OnDisable()
         {
             target.OnHealthChanged.RemoveListener(UpdateValue);
+            target.OnMaxHealthChanged.RemoveListener(UpdateMaxValue);
         }
     }
 }

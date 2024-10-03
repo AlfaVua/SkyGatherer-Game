@@ -18,6 +18,7 @@ namespace Player
         [SerializeField] private CollectingController collectingController;
         
         public PlayerMovement PlayerMovement => movement;
+        public HealthComponent PlayerHealth => healthComponentCore;
 
         public void Init()
         {
