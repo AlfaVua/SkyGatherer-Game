@@ -20,7 +20,7 @@ namespace Player
 
         public void AddExperience(float amount)
         {
-            _currentXp += amount * expModifier;
+            _currentXp += GetActualExperience(amount);
             TryLevelUp();
             OnXpChanged.Invoke(_currentXp);
         }
@@ -35,6 +35,11 @@ namespace Player
                 _currentLevel++;
             }
             OnLevelChanged.Invoke(_currentLevel, _nextLevelXp);
+        }
+
+        public float GetActualExperience(float rawExperience)
+        {
+            return rawExperience * expModifier;
         }
     }
 }

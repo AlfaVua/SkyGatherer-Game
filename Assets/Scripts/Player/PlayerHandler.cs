@@ -54,6 +54,7 @@ namespace Player
         {
             collectingController.Collect(collectable);
             experienceController.AddExperience(collectable.CollectionExperience);
+            FloatingTextUI.CreateFloatingText(transform.position, Color.white, "EXP +" + Mathf.Floor(experienceController.GetActualExperience(collectable.CollectionExperience)));
         }
 
         private void OnLevelUp(uint level, float nextExperience)
