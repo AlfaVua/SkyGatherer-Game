@@ -117,8 +117,8 @@ namespace Generators.Level
 
         public void RemoveFarLevels(int indexX, uint indexY)
         {
-            _activeLevels.Values.Where(level => Mathf.Abs(indexX - level.IndexX) + Mathf.Abs((int)indexY - level.IndexY) > 1).ToList().ForEach(RemoveLevel);
-        }   
+            _activeLevels.Values.Where(level => Mathf.Abs(indexX - level.IndexX) > 1 || Mathf.Abs((int)indexY - level.IndexY) > 1).ToList().ForEach(RemoveLevel);
+        }
 
         public void AddStartingLevel(LevelBase level)
         {

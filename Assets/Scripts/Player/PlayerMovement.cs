@@ -14,11 +14,11 @@ namespace Player
         [SerializeField] private float moveSpeed = 1;
         [SerializeField] [Min(0)] private float rayDistanceFromCenter = .7f;
         [SerializeField] private ParticleSystem slowdownParticles;
-        
+
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
         private bool _fallingSlowed;
-        private bool IsOnGround => rigidBody.velocity.y <= 0 && RaycastGround();
+        private bool IsOnGround => RaycastGround();
 
         private float _movingVelocityX;
         private float _fallDamageThreshold;
@@ -46,7 +46,7 @@ namespace Player
 
         private void JumpAction()
         {
-            rigidBody.velocity = Vector2.right * rigidBody.velocity.x;
+            ResetVerticalVelocity();
             rigidBody.AddForce(jumpPower * jumpHeightMultiplier * Vector2.up, ForceMode2D.Impulse);
         }
 
@@ -69,7 +69,8 @@ namespace Player
         private void OnCollisionEnter2D(Collision2D other)
         {
             _fallingSlowed = false;
-            if (other.relativeVelocity.y > _fallDamageThreshold && IsOnGround) OnFellFromHeight(other.relativeVelocity.y);
+            if (other.relativeVelocity.y > _fallDamageThreshold && IsOnGround)
+                OnFellFromHeight(other.relativeVelocity.y);
         }
 
         public void Move(float direction)
@@ -85,9 +86,24 @@ namespace Player
 
         public void Drop()
         {
-            playerCollider.enabled = false;
-            rigidBody.AddForce(Vector2.down, ForceMode2D.Impulse);
-            StartCoroutine(nameof(EnableCollisionRoutine));
+            if (rigidBody.velocity.y < -1) return;
+
+            ResetVerticalVelocity();
+            if (IsOnGround)
+            {
+                playerCollider.enabled = false;
+                StartCoroutine(nameof(EnableCollisionRoutine));
+                rigidBody.AddForce(Vector2.down * 2, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rigidBody.AddForce(Vector2.down, ForceMode2D.Impulse);
+            }
+        }
+
+        private void ResetVerticalVelocity()
+        {
+            rigidBody.velocity = Vector2.right * rigidBody.velocity.x;
         }
 
         private IEnumerator EnableCollisionRoutine()
@@ -103,7 +119,7 @@ namespace Player
             Gizmos.DrawLine(positionLeft, positionLeft + Vector3.down * raycastDistance);
             Gizmos.DrawLine(positionRight, positionRight + Vector3.down * raycastDistance);
         }
-        
+
         private void OnFellFromHeight(float fallSpeed)
         {
             var damage = (fallSpeed - _fallDamageThreshold * .9f) * .78f;

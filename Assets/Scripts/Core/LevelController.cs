@@ -45,10 +45,14 @@ namespace Core
 
         private void GenerateAround(int indexX, uint indexY)
         {
-            GenerateLevelAt(indexX + 1, indexY);
             GenerateLevelAt(indexX - 1, indexY);
+            GenerateLevelAt(indexX + 1, indexY);
             GenerateLevelAt(indexX, indexY + 1);
+            GenerateLevelAt(indexX - 1, indexY + 1);
+            GenerateLevelAt(indexX + 1, indexY + 1);
             if (indexY != 0) GenerateLevelAt(indexX, indexY - 1);
+            if (indexY != 0) GenerateLevelAt(indexX - 1, indexY - 1);
+            if (indexY != 0) GenerateLevelAt(indexX + 1, indexY - 1);
         }
     }
 }
