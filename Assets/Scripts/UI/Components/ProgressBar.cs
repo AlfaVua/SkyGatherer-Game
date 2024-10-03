@@ -72,7 +72,7 @@ namespace UI.Components
 
         public string ConvertToText()
         {
-            return Mathf.Floor(_targetValue) + " / " + maxValue;
+            return Mathf.Ceil(_targetValue) + " / " + maxValue;
         }
     }
 }
