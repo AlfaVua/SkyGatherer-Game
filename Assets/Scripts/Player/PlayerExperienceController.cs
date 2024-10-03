@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -8,11 +7,12 @@ namespace Player
     {
         public readonly UnityEvent<uint, float> OnLevelChanged = new();
         public readonly UnityEvent<float> OnXpChanged = new();
-        private uint _currentLevel = 1;
         private float _nextLevelXp = 100;
         private float _currentXp = 0;
         
         [HideInInspector] public float expModifier = 1;
+
+        public uint CurrentLevel { get; private set; } = 1;
 
         public void Init()
         {
@@ -32,9 +32,9 @@ namespace Player
             {
                 _currentXp -= _nextLevelXp;
                 _nextLevelXp *= 1.5f;
-                _currentLevel++;
+                CurrentLevel++;
             }
-            OnLevelChanged.Invoke(_currentLevel, _nextLevelXp);
+            OnLevelChanged.Invoke(CurrentLevel, _nextLevelXp);
         }
 
         public float GetActualExperience(float rawExperience)
