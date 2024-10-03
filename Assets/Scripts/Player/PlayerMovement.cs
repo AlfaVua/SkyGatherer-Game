@@ -53,7 +53,7 @@ namespace Player
             rigidBody.velocity = new Vector2(_movingVelocityX, rigidBody.velocity.y);
             if (rigidBody.velocity.y < -1)
             {
-                rigidBody.velocity += Vector2.up * (rigidBody.mass * Physics2D.gravity.y / 50f);
+                rigidBody.velocity += rigidBody.mass / 50f * Physics2D.gravity;
             }
         }
 

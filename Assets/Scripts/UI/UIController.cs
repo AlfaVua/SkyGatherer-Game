@@ -5,12 +5,14 @@ namespace UI
     public class UIController : MonoBehaviour
     {
         [SerializeField] private PlayerInventoryUI inventoryUI;
+        [SerializeField] private LevelUpUI levelUpUI;
 
         private UIBase _activeUI;
 
         public void Init()
         {
             UISignal.ToggleInventory.AddListener(ToggleInventory);
+            UISignal.ToggleLevelUp.AddListener(ToggleLevelUp);
         }
 
         private void ToggleUI(UIBase ui)
@@ -34,9 +36,15 @@ namespace UI
             ToggleUI(inventoryUI);
         }
 
+        private void ToggleLevelUp()
+        {
+            ToggleUI(levelUpUI);
+        }
+
         private void OnDestroy()
         {
             UISignal.ToggleInventory.RemoveListener(ToggleInventory);
+            UISignal.ToggleLevelUp.RemoveListener(ToggleLevelUp);
         }
     }
 }

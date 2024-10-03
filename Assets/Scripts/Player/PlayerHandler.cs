@@ -1,6 +1,7 @@
 using Components.Component;
 using Core;
 using Generators.Level;
+using UI;
 using UnityEngine;
 
 namespace Player
@@ -53,7 +54,7 @@ namespace Player
 
         private void OnLevelUp(uint level, float nextExperience)
         {
-            
+            UISignal.ToggleLevelUp.Invoke();
         }
     }
 }

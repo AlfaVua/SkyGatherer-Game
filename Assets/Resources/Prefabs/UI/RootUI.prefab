@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 3766097217440988541}
+  levelUpUI: {fileID: 7506649742171816087}
 --- !u!1001 &985900625210434048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -224,6 +225,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3992783082907376217, guid: 20166d32d3775144298b89988cbef2f0, type: 3}
   m_PrefabInstance: {fileID: 985900625210434048}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7506649742171816087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7314520130534056599, guid: 20166d32d3775144298b89988cbef2f0, type: 3}
+  m_PrefabInstance: {fileID: 985900625210434048}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09596bcf4092461188c2fde6fbdceeeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4940931380417336404
 PrefabInstance:
   m_ObjectHideFlags: 0
