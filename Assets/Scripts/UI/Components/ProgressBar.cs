@@ -69,5 +69,10 @@ namespace UI.Components
         {
             this.maxValue = maxValue;
         }
+
+        public string ConvertToText()
+        {
+            return Mathf.Floor(_targetValue) + " / " + maxValue;
+        }
     }
 }
