@@ -9,10 +9,10 @@ namespace Player
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private Collider2D playerCollider;
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] private float raycastDistance = 1;
+        [SerializeField] private float raycastDistance = .35f;
         [SerializeField] private float jumpPower = 7;
         [SerializeField] private float moveSpeed = 1;
-        [SerializeField] [Min(0)] private float rayDistanceFromCenter = .7f;
+        [SerializeField] [Min(0)] private float rayDistanceFromCenter = 1;
         [SerializeField] private ParticleSystem slowdownParticles;
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
@@ -31,17 +31,17 @@ namespace Player
             _fallDamageThreshold = playerData.fallDamageThreshold;
         }
 
-        private Vector3 GetRayStartPosition(float rayDirectionX = 0)
+        private Vector3 GetRayStartPosition()
         {
-            return rigidBody.transform.position + Vector3.right * (rayDirectionX * rayDistanceFromCenter * .35f);
+            return rigidBody.transform.position + rayDistanceFromCenter * .35f * Vector3.down;
         }
 
         private bool RaycastGround(float distanceMultiplier = 1)
         {
-            return Physics2D.Raycast(GetRayStartPosition(-1), Vector2.down, raycastDistance * distanceMultiplier,
-                       groundMask) ||
-                   Physics2D.Raycast(GetRayStartPosition(1), Vector2.down, raycastDistance * distanceMultiplier,
-                       groundMask);
+            var hit = Physics2D.BoxCast(GetRayStartPosition(), Vector2.one / 2, transform.rotation.z, Vector2.down, distanceMultiplier * raycastDistance, groundMask);
+            if (hit.point != Vector2.zero)
+                Debug.DrawLine(GetRayStartPosition(), hit.point, Color.red, 2);
+            return hit;
         }
 
         private void JumpAction()
@@ -110,14 +110,6 @@ namespace Player
         {
             yield return new WaitForSeconds(.2f);
             playerCollider.enabled = true;
-        }
-
-        private void OnDrawGizmos()
-        {
-            var positionLeft = GetRayStartPosition(-1);
-            var positionRight = GetRayStartPosition(1);
-            Gizmos.DrawLine(positionLeft, positionLeft + Vector3.down * raycastDistance);
-            Gizmos.DrawLine(positionRight, positionRight + Vector3.down * raycastDistance);
         }
 
         private void OnFellFromHeight(float fallSpeed)
