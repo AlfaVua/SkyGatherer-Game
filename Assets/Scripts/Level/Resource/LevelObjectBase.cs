@@ -33,7 +33,7 @@ namespace Level.Resource
         {
             placeIndex = data.PlaceIndex;
             _isCollected = data.IsCollected;
-            if (_isCollected) interactionTarget.enabled = false;
+            if (_isCollected) interactionTarget.gameObject.SetActive(false);
             UpdateView();
         }
 
@@ -53,7 +53,7 @@ namespace Level.Resource
 
         private void Collect()
         {
-            interactionTarget.enabled = false;
+            interactionTarget.gameObject.SetActive(false);
             _isCollected = true;
             UpdateView();
             collectEffect.Emit(20);
