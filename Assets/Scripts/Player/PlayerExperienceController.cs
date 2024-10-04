@@ -31,8 +31,7 @@ namespace Player
             while (_currentXp >= _nextLevelXp)
             {
                 _currentXp -= _nextLevelXp;
-                _nextLevelXp *= 1.5f;
-                CurrentLevel++;
+                _nextLevelXp = 100 + 1000 * Mathf.Log(1 + ++CurrentLevel / 10f);
             }
             OnLevelChanged.Invoke(CurrentLevel, _nextLevelXp);
         }
