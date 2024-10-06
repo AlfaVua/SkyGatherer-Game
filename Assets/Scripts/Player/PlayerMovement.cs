@@ -8,11 +8,10 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D rigidBody;
-        [SerializeField] private Collider2D playerCollider;
+        [SerializeField] private CapsuleCollider2D playerCollider;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float jumpPower = 7;
         [SerializeField] private float moveSpeed = 1;
-        [SerializeField] [Min(0)] private float rayDistanceFromCenter = 1;
         [SerializeField] private ParticleSystem slowdownParticles;
         [SerializeField] private Animator movementAnimator;
 
@@ -37,12 +36,12 @@ namespace Player
 
         private Vector3 GetRayStartPosition()
         {
-            return rigidBody.transform.position + rayDistanceFromCenter * .35f * Vector3.down;
+            return rigidBody.transform.position + playerCollider.size.y * .35f * Vector3.down;
         }
 
         private bool RaycastGround(float additionalDistance = 0)
         {
-            var hit = Physics2D.BoxCast(GetRayStartPosition(), Vector2.one / 2, transform.rotation.z, Vector2.down, additionalDistance, groundMask);
+            var hit = Physics2D.BoxCast(GetRayStartPosition(), Vector2.one / 2, 0, Vector2.down, additionalDistance, groundMask);
             return hit;
         }
 
@@ -81,7 +80,7 @@ namespace Player
 
         private void OnCollisionExit2D(Collision2D other)
         {
-            _moveBehavior.IsOnGround = IsOnGround;
+            _moveBehavior.IsOnGround = false;
         }
 
         public void Move(float direction)

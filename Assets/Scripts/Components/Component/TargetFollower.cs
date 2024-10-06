@@ -12,6 +12,7 @@ namespace Components.Component
 
         private void FixedUpdate()
         {
+            if (!target) return;
             _followVelocity = Vector2.LerpUnclamped(_followVelocity, target.velocity, lerpSpeed / 3f);
             var targetPos = target.position + _followVelocity * followOffset;
             var currentPos = transform.position;
