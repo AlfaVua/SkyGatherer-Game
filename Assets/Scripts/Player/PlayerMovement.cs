@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,11 +10,11 @@ namespace Player
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private Collider2D playerCollider;
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] private float raycastDistance = .35f;
         [SerializeField] private float jumpPower = 7;
         [SerializeField] private float moveSpeed = 1;
         [SerializeField] [Min(0)] private float rayDistanceFromCenter = 1;
         [SerializeField] private ParticleSystem slowdownParticles;
+        [SerializeField] private Animator movementAnimator;
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
@@ -23,10 +24,13 @@ namespace Player
         private float _movingVelocityX;
         private float _fallDamageThreshold;
 
+        private MovementViewBehavior _moveBehavior;
+
         [HideInInspector] public float jumpHeightMultiplier;
 
         public void Init(PlayerData playerData)
         {
+            _moveBehavior = new MovementViewBehavior(movementAnimator);
             jumpHeightMultiplier = 1;
             _fallDamageThreshold = playerData.fallDamageThreshold;
         }
@@ -36,17 +40,16 @@ namespace Player
             return rigidBody.transform.position + rayDistanceFromCenter * .35f * Vector3.down;
         }
 
-        private bool RaycastGround(float distanceMultiplier = 1)
+        private bool RaycastGround(float additionalDistance = 0)
         {
-            var hit = Physics2D.BoxCast(GetRayStartPosition(), Vector2.one / 2, transform.rotation.z, Vector2.down, distanceMultiplier * raycastDistance, groundMask);
-            if (hit.point != Vector2.zero)
-                Debug.DrawLine(GetRayStartPosition(), hit.point, Color.red, 2);
+            var hit = Physics2D.BoxCast(GetRayStartPosition(), Vector2.one / 2, transform.rotation.z, Vector2.down, additionalDistance, groundMask);
             return hit;
         }
 
         private void JumpAction()
         {
             ResetVerticalVelocity();
+            _moveBehavior.IsOnGround = false;
             rigidBody.AddForce(jumpPower * jumpHeightMultiplier * Vector2.up, ForceMode2D.Impulse);
         }
 
@@ -57,6 +60,7 @@ namespace Player
             {
                 rigidBody.velocity += rigidBody.mass / 50f * Physics2D.gravity;
             }
+            _moveBehavior.Update(rigidBody.velocity);
         }
 
         private void SlowdownFalling()
@@ -69,13 +73,24 @@ namespace Player
         private void OnCollisionEnter2D(Collision2D other)
         {
             _fallingSlowed = false;
-            if (other.relativeVelocity.y > _fallDamageThreshold && IsOnGround)
+            if (!IsOnGround) return;
+            _moveBehavior.IsOnGround = rigidBody.velocity.y == 0;
+            if (other.relativeVelocity.y > _fallDamageThreshold)
                 OnFellFromHeight(other.relativeVelocity.y);
+        }
+
+        private void OnCollisionExit2D(Collision2D other)
+        {
+            _moveBehavior.IsOnGround = IsOnGround;
         }
 
         public void Move(float direction)
         {
             _movingVelocityX = direction * moveSpeed;
+            if (direction != 0)
+                movementAnimator.transform.localScale = new Vector3(direction, 1, 1);
+            else if (IsOnGround)
+                ResetVerticalVelocity();
         }
 
         public void Jump()

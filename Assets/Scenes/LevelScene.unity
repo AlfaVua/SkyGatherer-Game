@@ -179,7 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelController: {fileID: 960436715817546824}
-  camera: {fileID: 714451943}
   player: {fileID: 895686261}
   resourceManager: {fileID: 11400000, guid: 96c05318602c6b745af96f9349426820, type: 2}
   uiController: {fileID: 85071751}
@@ -200,8 +199,8 @@ GameObject:
   - component: {fileID: 714451942}
   - component: {fileID: 714451941}
   - component: {fileID: 714451940}
+  - component: {fileID: 714451945}
   - component: {fileID: 714451939}
-  - component: {fileID: 714451943}
   - component: {fileID: 714451944}
   m_Layer: 0
   m_Name: Camera
@@ -330,20 +329,6 @@ Transform:
   - {fileID: 2111718458}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &714451943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714451938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6091401b59b8414e9ea2bbc3120a36eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectorPositionEffect: 0.15
-  additionalEffector: {fileID: 895686262}
 --- !u!114 &714451944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +346,21 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 15c7477d75d041a49a7ef36ca04fbae7, type: 2}
+--- !u!114 &714451945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714451938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6091401b59b8414e9ea2bbc3120a36eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1722885623}
+  lerpSpeed: 0.25
+  followOffset: 0.1
 --- !u!1001 &895686260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -436,11 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a7d121e5dd46a2a5658248c2f76e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &895686262 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5261622674665880559, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
-  m_PrefabInstance: {fileID: 895686260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &895686263 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7254934560565152100, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
@@ -704,6 +699,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 714451942}
   decreaseFactor: 1
+--- !u!50 &1722885623 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 4299670562065739201, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
+  m_PrefabInstance: {fileID: 895686260}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1806048487
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +731,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 5000, y: 6, z: 1}
+  m_LocalScale: {x: 5000, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1006797075}

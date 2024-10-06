@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Components.Component;
 using Generators.Resource;
 using Player;
 using Player.Modifiers;
@@ -16,7 +13,6 @@ namespace Core
     {
         public static GameController Instance { get; private set; }
         [SerializeField] private LevelController levelController;
-        [SerializeField] private FollowingCamera camera;
         [SerializeField] private PlayerHandler player;
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private UIController uiController;
@@ -43,7 +39,7 @@ namespace Core
             _modifierHandler = new PlayerModifierHandler(modifiers, player);
             player.Init();
             resourceManager.Init();
-            levelController.Init();
+            levelController?.Init();
         }
 
         private void AddListeners()
@@ -53,16 +49,13 @@ namespace Core
 
         private void Start()
         {
-            levelController.GenerateStartingLevel();
+            levelController?.GenerateStartingLevel();
         }
 
         private void OnPlayerInNewLevel(int indexX, uint indexY)
         {
             levelController.SetNewActiveCoords(indexX, indexY);
-            SetCameraTarget(Utils.Utils.IndexToX * indexX, Utils.Utils.IndexToY * indexY);
         }
-
-        private Action<float, float> SetCameraTarget => camera.SetTargetPosition;
 
         // private int positionX = 0;
         // private uint positionY = 0;

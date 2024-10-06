@@ -13,7 +13,7 @@ namespace Player.Modifiers.Modifications
 
         public override void Apply(PlayerModifierHandler handler)
         {
-            handler.PlayerHealth.HealForPercentage(.1f);
+            handler.PlayerHealth.HealForPercentage(.5f);
         }
     }
 }

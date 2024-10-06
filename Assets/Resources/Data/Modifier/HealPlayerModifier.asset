@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801c602e29c34883b186e38c9048fe49, type: 3}
   m_Name: HealPlayerModifier
   m_EditorClassIdentifier: 
-  id: 0
+  id: 2
   type: 2
   title: Heal
-  description: Heal for 10% of max health
+  description: Heal for 50% of max health

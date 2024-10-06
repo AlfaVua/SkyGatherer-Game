@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801c602e29c34883b186e38c9048fe49, type: 3}
   m_Name: MaxHealthModifier
   m_EditorClassIdentifier: 
-  id: 0
+  id: 3
   type: 1
   title: Durable
-  description: Increases maximum health by 5%
+  description: Increases maximum health by 10%

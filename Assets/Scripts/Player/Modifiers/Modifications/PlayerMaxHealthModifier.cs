@@ -10,7 +10,7 @@ namespace Player.Modifiers.Modifications
 
         public override void Apply(PlayerModifierHandler handler)
         {
-            handler.PlayerHealth.IncreaseMaxHealthByPercent(1 + .05f * _modifier);
+            handler.PlayerHealth.IncreaseMaxHealthByPercent(1 + .1f * _modifier);
         }
     }
 }
