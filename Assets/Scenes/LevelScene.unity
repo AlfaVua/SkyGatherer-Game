@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 714451945}
   - component: {fileID: 714451939}
   - component: {fileID: 714451944}
+  - component: {fileID: 714451946}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -361,6 +362,20 @@ MonoBehaviour:
   target: {fileID: 1722885623}
   lerpSpeed: 0.25
   followOffset: 0.1
+--- !u!114 &714451946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714451938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e53a1108aad849b593fdade4b0c6730e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 04aefacfac5b35e4b839d3103655a947, type: 2}
+  properties: {fileID: 714451939}
 --- !u!1001 &895686260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5826,10 +5841,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1642635536966427596, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2874646805518617818, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3178205170533214782, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}

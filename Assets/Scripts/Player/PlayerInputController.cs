@@ -43,6 +43,11 @@ namespace Player
             UISignal.ToggleInventory.Invoke();
         }
 
+        public void OnSettings(InputAction.CallbackContext context)
+        {
+            UISignal.ToggleSettings.Invoke();
+        }
+
         private void OnUIVisibilityChanged(bool visible)
         {
             _disableMovement = visible;
