@@ -14,13 +14,14 @@ namespace UI
         {
             UISignal.ToggleInventory.AddListener(ToggleInventory);
             UISignal.ToggleLevelUp.AddListener(ToggleLevelUp);
-            UISignal.ToggleSettings.AddListener(TogglePause);
+            UISignal.OnEscPressed.AddListener(ToggleActiveUIOrSettings);
         }
 
         private void ToggleUI(UIBase ui)
         {
+            if (_activeUI && !_activeUI.CanCloseByOthers && ui != _activeUI) return;
             if (_activeUI) _activeUI.Hide();
-            if (ui == _activeUI)
+            if (!ui || ui == _activeUI)
             {
                 _activeUI = null;
                 UISignal.OnOverlayUIChanged.Invoke(false);
@@ -43,16 +44,16 @@ namespace UI
             ToggleUI(levelUpUI);
         }
 
-        private void TogglePause()
+        private void ToggleActiveUIOrSettings()
         {
-            ToggleUI(settingsUI);
+            ToggleUI(_activeUI ? null : settingsUI);
         }
 
         private void OnDestroy()
         {
             UISignal.ToggleInventory.RemoveListener(ToggleInventory);
             UISignal.ToggleLevelUp.RemoveListener(ToggleLevelUp);
-            UISignal.ToggleSettings.RemoveListener(TogglePause);
+            UISignal.OnEscPressed.RemoveListener(ToggleActiveUIOrSettings);
         }
     }
 }

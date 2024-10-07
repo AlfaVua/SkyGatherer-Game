@@ -1,3 +1,4 @@
+using System;
 using Components.Component;
 using Core;
 using Generators.Level;
@@ -11,6 +12,7 @@ namespace Level.Resource
         [SerializeField] private SpriteRenderer view;
         [SerializeField] private InteractableObject interactionTarget;
         [SerializeField] private ParticleSystem collectEffect;
+        [SerializeField] private PlaySoundRandomPitch collectSound;
 
         private LevelObjectData _static;
         private bool _isCollected;
@@ -54,6 +56,7 @@ namespace Level.Resource
         private void Collect()
         {
             interactionTarget.gameObject.SetActive(false);
+            collectSound?.Play();
             _isCollected = true;
             UpdateView();
             collectEffect.Emit(20);

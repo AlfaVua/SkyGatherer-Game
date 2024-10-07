@@ -40,12 +40,12 @@ namespace Player
 
         public void OnOpenInventory(InputAction.CallbackContext context)
         {
-            UISignal.ToggleInventory.Invoke();
+            if (context.started) UISignal.ToggleInventory.Invoke();
         }
 
         public void OnSettings(InputAction.CallbackContext context)
         {
-            UISignal.ToggleSettings.Invoke();
+            if (context.started) UISignal.OnEscPressed.Invoke();
         }
 
         private void OnUIVisibilityChanged(bool visible)

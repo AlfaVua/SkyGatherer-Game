@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Components.Component;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,8 @@ namespace Player
         [SerializeField] private float moveSpeed = 1;
         [SerializeField] private ParticleSystem slowdownParticles;
         [SerializeField] private Animator movementAnimator;
+        [SerializeField] private PlaySoundRandomPitch grassSound;
+        [SerializeField] private PlayRandomSoundWithCooldown fallSound;
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
@@ -22,6 +25,8 @@ namespace Player
 
         private float _movingVelocityX;
         private float _fallDamageThreshold;
+
+        private float _grassSoundCooldown = 0;
 
         private MovementViewBehavior _moveBehavior;
 
@@ -52,6 +57,21 @@ namespace Player
             rigidBody.AddForce(jumpPower * jumpHeightMultiplier * Vector2.up, ForceMode2D.Impulse);
         }
 
+        private void Update()
+        {
+            if (_grassSoundCooldown > (_moveBehavior.IsOnGround ? 0 : .15f))
+                _grassSoundCooldown -= Time.deltaTime;
+            else if (_moveBehavior.IsOnGround && _movingVelocityX != 0) PlayGrassSound();
+            
+            if (Mathf.Abs(rigidBody.velocity.y) > 15f) fallSound.TryPlay();
+        }
+
+        private void PlayGrassSound()
+        {
+            grassSound.Play();
+            _grassSoundCooldown = .35f;
+        }
+
         private void FixedUpdate()
         {
             rigidBody.velocity = new Vector2(_movingVelocityX, rigidBody.velocity.y);
@@ -73,7 +93,10 @@ namespace Player
         {
             _fallingSlowed = false;
             if (!IsOnGround) return;
-            _moveBehavior.IsOnGround = rigidBody.velocity.y == 0;
+            _moveBehavior.IsOnGround = true;
+            
+            if (other.relativeVelocity.y < 0) return;
+            PlayGrassSound();
             if (other.relativeVelocity.y > _fallDamageThreshold)
                 OnFellFromHeight(other.relativeVelocity.y);
         }

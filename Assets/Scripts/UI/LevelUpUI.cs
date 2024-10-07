@@ -14,6 +14,7 @@ namespace UI
         private uint _lastDisplayedLevel = 1;
 
         private uint _levelsLeft = 0;
+        public override bool CanCloseByOthers => false;
         
         protected override void UpdateView()
         {

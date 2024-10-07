@@ -17,5 +17,7 @@ namespace UI
         }
 
         protected abstract void UpdateView();
+
+        public virtual bool CanCloseByOthers => true;
     }
 }
