@@ -99,7 +99,7 @@ namespace Core
 
         public static void InitLevelLose()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("Scenes/MainScreen");
         }
     }
 }
