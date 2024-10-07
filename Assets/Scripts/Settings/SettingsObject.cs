@@ -11,6 +11,8 @@ namespace Core
 
         private void Awake()
         {
+            postProcessing = !PlayerPrefs.HasKey("PostProcessing") || PlayerPrefs.GetInt( "PostProcessing") == 1;
+            masterVolume = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 1f;
             AudioListener.volume = masterVolume;
         }
     }

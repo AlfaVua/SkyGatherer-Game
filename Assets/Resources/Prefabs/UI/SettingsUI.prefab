@@ -2158,7 +2158,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4095816195024809959}
+      - m_Target: {fileID: 8823484596071445339}
         m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
         m_MethodName: set_interactable
         m_Mode: 0
@@ -2512,7 +2512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsObject: {fileID: 11400000, guid: 04aefacfac5b35e4b839d3103655a947, type: 2}
-  bloomSlider: {fileID: 4095816195024809959}
+  bloomSlider: {fileID: 8823484596071445339}
   postProcessingToggle: {fileID: 3612107826599659437}
   volumeProfile: {fileID: 11400000, guid: 15c7477d75d041a49a7ef36ca04fbae7, type: 2}
   masterVolumeSlider: {fileID: 4095816195024809959}

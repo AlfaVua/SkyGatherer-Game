@@ -24,7 +24,7 @@ namespace UI
             }
 
             postProcessingToggle.isOn = settingsObject.postProcessing;
-            bloomSlider.value = _bloomVolume.intensity.value;
+            bloomSlider.value = PlayerPrefs.HasKey("Bloom") ? PlayerPrefs.GetFloat("Bloom") : 1.2f;
             masterVolumeSlider.value = settingsObject.masterVolume;
         }
 
@@ -57,6 +57,15 @@ namespace UI
             bloomSlider.onValueChanged.RemoveListener(UpdateBloom);
             postProcessingToggle.onValueChanged.RemoveListener(UpdatePostProcessing);
             masterVolumeSlider.onValueChanged.RemoveListener(UpdateMasterVolume);
+            SaveToPreferences();
+        }
+
+        private void SaveToPreferences()
+        {
+            PlayerPrefs.SetInt("PostProcessing", postProcessingToggle.isOn ? 1 : 0);
+            PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
+            PlayerPrefs.SetFloat("Bloom", bloomSlider.value);
+            PlayerPrefs.Save();
         }
     }
 }
