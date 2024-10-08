@@ -16,6 +16,7 @@ namespace Player
         [SerializeField] private Animator movementAnimator;
         [SerializeField] private PlaySoundRandomPitch grassSound;
         [SerializeField] private PlaySoundRandomPitch fallDamageSound;
+        [SerializeField] private PlaySoundRandomPitch slowdownFallingSound;
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
@@ -81,9 +82,10 @@ namespace Player
 
         private void SlowdownFalling()
         {
-            rigidBody.AddForce(Vector2.down * (rigidBody.velocity.y * .9f), ForceMode2D.Impulse);
+            rigidBody.AddForce(Vector2.down * rigidBody.velocity.y, ForceMode2D.Impulse);
             _fallingSlowed = true;
-            slowdownParticles.Emit(25);
+            slowdownParticles.Emit(50);
+            slowdownFallingSound.Play();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
