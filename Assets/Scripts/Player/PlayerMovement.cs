@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Components.Component;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace Player
         [SerializeField] private ParticleSystem slowdownParticles;
         [SerializeField] private Animator movementAnimator;
         [SerializeField] private PlaySoundRandomPitch grassSound;
-        [SerializeField] private PlayRandomSoundWithCooldown fallSound;
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
@@ -62,8 +60,6 @@ namespace Player
             if (_grassSoundCooldown > (_moveBehavior.IsOnGround ? 0 : .15f))
                 _grassSoundCooldown -= Time.deltaTime;
             else if (_moveBehavior.IsOnGround && _movingVelocityX != 0) PlayGrassSound();
-            
-            if (Mathf.Abs(rigidBody.velocity.y) > 15f) fallSound.TryPlay();
         }
 
         private void PlayGrassSound()
