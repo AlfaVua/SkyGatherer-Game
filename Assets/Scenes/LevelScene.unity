@@ -816,6 +816,11 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4299670562065739201, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
   m_PrefabInstance: {fileID: 895686260}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1722885627 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5261622674665880559, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
+  m_PrefabInstance: {fileID: 895686260}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1806048487
 GameObject:
   m_ObjectHideFlags: 0
@@ -5968,6 +5973,10 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 4054372328073416395, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1722885627}
     - target: {fileID: 4213548783092265102, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
       propertyPath: m_Pivot.x
       value: 0
