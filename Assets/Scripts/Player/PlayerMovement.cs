@@ -15,6 +15,7 @@ namespace Player
         [SerializeField] private ParticleSystem slowdownParticles;
         [SerializeField] private Animator movementAnimator;
         [SerializeField] private PlaySoundRandomPitch grassSound;
+        [SerializeField] private PlaySoundRandomPitch fallDamageSound;
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
@@ -148,6 +149,7 @@ namespace Player
         private void OnFellFromHeight(float fallSpeed)
         {
             var damage = (fallSpeed - _fallDamageThreshold * .9f) * .78f;
+            fallDamageSound.Play();
             OnFellFromHeightSignal.Invoke(damage * damage);
         }
     }
