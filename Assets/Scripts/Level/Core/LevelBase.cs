@@ -18,7 +18,6 @@ namespace Level.Core
         public virtual CachedLevelData CachedData => new()
         {
             Objects = objectGenerator.CachedObjectsData,
-            Name = Name,
             LevelID = staticData.id
         };
 
@@ -44,7 +43,6 @@ namespace Level.Core
 
         private void UpdateData(CachedLevelData cached)
         {
-            Name = cached.Name;
             objectGenerator.Generate(cached.Objects);
         }
 
