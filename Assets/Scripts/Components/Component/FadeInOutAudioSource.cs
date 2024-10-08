@@ -16,13 +16,16 @@ namespace Components.Component
         private void Awake()
         {
             _startingVolume = source.volume;
+            source.volume = 0;
+            if (!source.isPlaying) // Load sound before first call to prevent lag spike
+                source.Play();
+            source.Pause();
         }
 
         public void FadeIn()
         {
             if (!isFadingOut) return;
-            
-            source.volume = 0;
+
             StopCoroutine(nameof(FadeOutRoutine));
             StartCoroutine(nameof(FadeInRoutine));
         }
@@ -30,8 +33,7 @@ namespace Components.Component
         public void FadeOut()
         {
             if (isFadingOut) return;
-            
-            source.volume = _startingVolume;
+
             StopCoroutine(nameof(FadeInRoutine));
             StartCoroutine(nameof(FadeOutRoutine));
         }
@@ -44,7 +46,7 @@ namespace Components.Component
 
             while (source.volume < _startingVolume)
             {
-                source.volume = Mathf.Lerp(0, _startingVolume, timeElapsed / fadeInTime);
+                source.volume = Mathf.Lerp(source.volume, _startingVolume, timeElapsed / fadeInTime);
                 timeElapsed += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
@@ -57,7 +59,7 @@ namespace Components.Component
 
             while (source.volume > 0)
             {
-                source.volume = Mathf.Lerp(_startingVolume, 0, timeElapsed / fadeOutTime);
+                source.volume = Mathf.Lerp(source.volume, 0, timeElapsed / fadeOutTime);
                 timeElapsed += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }

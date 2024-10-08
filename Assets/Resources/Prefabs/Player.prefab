@@ -10663,8 +10663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7929416449449696514}
-  fadeInTime: 2
-  fadeOutTime: 0.05
+  fadeInTime: 4
+  fadeOutTime: 0.25
   isFadingOut: 1
 --- !u!82 &7929416449449696514
 AudioSource:
