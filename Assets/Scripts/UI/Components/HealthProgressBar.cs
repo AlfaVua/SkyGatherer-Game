@@ -1,5 +1,6 @@
 using System;
 using Components.Component;
+using Player.Components;
 using TMPro;
 using UnityEngine;
 

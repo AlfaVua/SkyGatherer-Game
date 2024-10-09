@@ -1,6 +1,7 @@
 using Components.Component;
 using Core;
 using Generators.Level;
+using Player.Components;
 using UI;
 using UnityEngine;
 

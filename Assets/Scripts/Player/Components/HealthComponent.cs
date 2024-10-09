@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Components.Component
+namespace Player.Components
 {
     public class HealthComponent : MonoBehaviour
     {

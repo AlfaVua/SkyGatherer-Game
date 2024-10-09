@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Components.Component;
+using Player.Components;
 using Player.Modifiers.Data;
 
 namespace Player.Modifiers
