@@ -154,5 +154,12 @@ namespace Player
             fallDamageSound.Play();
             OnFellFromHeightSignal.Invoke(damage * damage);
         }
+
+        public void DisableGravity()
+        {
+            rigidBody.gravityScale = 0;
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.simulated = false;
+        }
     }
 }

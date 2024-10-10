@@ -6117,6 +6117,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -28.75
       objectReference: {fileID: 0}
+    - target: {fileID: 6518810548380372683, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 895686261}
     - target: {fileID: 7141093066123966977, guid: c71105a96cda2d74ea61a93cacbdee41, type: 3}
       propertyPath: m_Name
       value: RootUI

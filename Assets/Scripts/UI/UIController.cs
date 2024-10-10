@@ -7,6 +7,7 @@ namespace UI
         [SerializeField] private PlayerInventoryUI inventoryUI;
         [SerializeField] private LevelUpUI levelUpUI;
         [SerializeField] private SettingsUI settingsUI;
+        [SerializeField] private LoseUI loseUI;
 
         private UIBase _activeUI;
 
@@ -15,6 +16,7 @@ namespace UI
             UISignal.ToggleInventory.AddListener(ToggleInventory);
             UISignal.ToggleLevelUp.AddListener(ToggleLevelUp);
             UISignal.OnEscPressed.AddListener(ToggleActiveUIOrSettings);
+            UISignal.ToggleLoseUI.AddListener(ToggleLoseUI);
         }
 
         private void ToggleUI(UIBase ui)
@@ -48,12 +50,19 @@ namespace UI
         {
             ToggleUI(_activeUI ? null : settingsUI);
         }
+        
+        private void ToggleLoseUI(LoseReason reason)
+        {
+            loseUI.reason = reason;
+            ToggleUI(loseUI);
+        }
 
         private void OnDestroy()
         {
             UISignal.ToggleInventory.RemoveListener(ToggleInventory);
             UISignal.ToggleLevelUp.RemoveListener(ToggleLevelUp);
             UISignal.OnEscPressed.RemoveListener(ToggleActiveUIOrSettings);
+            UISignal.ToggleLoseUI.RemoveListener(ToggleLoseUI);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace UI
         public static readonly UnityEvent ToggleInventory = new UnityEvent();
         public static readonly UnityEvent ToggleLevelUp = new UnityEvent();
         public static readonly UnityEvent OnEscPressed = new UnityEvent();
+        public static readonly UnityEvent<LoseReason> ToggleLoseUI = new UnityEvent<LoseReason>();
 
         public static void Clear()
         {
@@ -15,6 +16,7 @@ namespace UI
             ToggleInventory.RemoveAllListeners();
             ToggleLevelUp.RemoveAllListeners();
             OnEscPressed.RemoveAllListeners();
+            ToggleLoseUI.RemoveAllListeners();
         }
     }
 }

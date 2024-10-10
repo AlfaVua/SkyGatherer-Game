@@ -48,7 +48,7 @@ namespace Player
         {
             shakeOnDamage.Play(damageTaken / 100, .1f);
             takeDamageParticles.Emit(25);
-            if (healthComponentCore.CurrentHealth <= 0) GameController.InitLevelLose();
+            if (healthComponentCore.CurrentHealth <= 0) GameController.OnLost(LoseReason.Health);
         }
 
         public void OnCollectResource(LevelObjectData collectable)
@@ -61,6 +61,11 @@ namespace Player
         private void OnLevelUp(uint level, float nextExperience)
         {
             UISignal.ToggleLevelUp.Invoke();
+        }
+
+        public void DisableGravity()
+        {
+            movement.DisableGravity();
         }
     }
 }

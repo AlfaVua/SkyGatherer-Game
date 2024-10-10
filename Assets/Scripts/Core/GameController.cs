@@ -97,7 +97,18 @@ namespace Core
             InputController.Inputs.Disable();
         }
 
-        public static void InitLevelLose()
+        public static void OnLost(LoseReason reason)
+        {
+            Instance.player.DisableGravity();
+            UISignal.ToggleLoseUI.Invoke(reason);
+        }
+
+        public static void ReloadActiveScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public static void BackToMenu()
         {
             SceneManager.LoadScene("Scenes/MainScreen");
         }

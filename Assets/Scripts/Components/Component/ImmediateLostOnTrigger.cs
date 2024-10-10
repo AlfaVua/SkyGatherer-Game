@@ -1,4 +1,5 @@
 using Core;
+using UI;
 using UnityEngine;
 
 namespace Components.Component
@@ -9,7 +10,7 @@ namespace Components.Component
         {
             if (Utils.Utils.IsPlayer(other.gameObject))
             {
-                GameController.InitLevelLose();
+                GameController.OnLost(LoseReason.Fell);
             }
         }
     }
