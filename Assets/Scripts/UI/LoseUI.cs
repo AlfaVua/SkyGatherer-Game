@@ -18,6 +18,8 @@ namespace UI
 
         public LoseReason reason;
 
+        public override bool CanCloseByOthers => false;
+
         protected override void UpdateView()
         {
             loseReason.text = reason switch
