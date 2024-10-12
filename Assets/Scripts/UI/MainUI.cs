@@ -1,3 +1,4 @@
+using Core;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,11 +10,10 @@ namespace UI
     {
         [SerializeField] private Button startButton;
         [SerializeField] private Button closeButton;
-        [SerializeField] private Scene gameScene;
 
         private void StartGame()
         {
-            SceneManager.LoadScene("Scenes/LevelScene");
+            SceneController.Instance.ShowGameScene();
         }
 
         private void CloseGame()

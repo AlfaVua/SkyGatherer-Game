@@ -1,4 +1,3 @@
-using System;
 using Core;
 using Player;
 using TMPro;
@@ -31,26 +30,16 @@ namespace UI
             levelReached.text = player.ExperienceController.CurrentLevel.ToString();
         }
 
-        private void StartNextGame()
-        {
-            GameController.ReloadActiveScene();
-        }
-
-        private void BackToMenu()
-        {
-            GameController.BackToMenu();
-        }
-
         private void OnEnable()
         {
-            startNext.onClick.AddListener(StartNextGame);
-            backToMain.onClick.AddListener(BackToMenu);
+            startNext.onClick.AddListener(SceneController.ReloadActiveScene);
+            backToMain.onClick.AddListener(SceneController.Instance.ShowMainMenu);
         }
 
         private void OnDisable()
         {
-            startNext.onClick.RemoveListener(StartNextGame);
-            backToMain.onClick.RemoveListener(BackToMenu);
+            startNext.onClick.RemoveListener(SceneController.ReloadActiveScene);
+            backToMain.onClick.RemoveListener(SceneController.Instance.ShowMainMenu);
         }
     }
 }

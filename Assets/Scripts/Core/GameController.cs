@@ -102,15 +102,5 @@ namespace Core
             Instance.player.DisableGravity();
             UISignal.ToggleLoseUI.Invoke(reason);
         }
-
-        public static void ReloadActiveScene()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
-        public static void BackToMenu()
-        {
-            SceneManager.LoadScene("Scenes/MainScreen");
-        }
     }
 }
