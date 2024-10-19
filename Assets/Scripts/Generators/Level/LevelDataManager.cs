@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Generators.Level.Data;
 using Level.Core;
+using Unity.VisualScripting;
 
 namespace Generators.Level
 {
@@ -72,14 +73,14 @@ namespace Generators.Level
         {
             var neighbourIds = sides
                 .Where(side => side.Value)
-                .Select(side => GetLevelRelations(side.Value.staticData.id).GetNeighbors(OppositeSide.Get(side.Key))).ToList();
+                .Select(side => GetLevelRelations(side.Value.staticData.id).GetNeighbors(OppositeSide.Get(side.Key)).AsEnumerable());
             if (excludeBottoms)
             {
-                neighbourIds = neighbourIds.Select(list => list.Where(id => !GetLevelData(id).Bottom.enabled).ToList()).ToList();
+                neighbourIds = neighbourIds.Select(list => list.Where(id => !GetLevelData(id).Bottom.enabled));
             }
             var matchingIds = neighbourIds.First();
-            if (neighbourIds.Count == 1) return matchingIds;
-            return neighbourIds.Skip(1).Aggregate(matchingIds, (current, ids) => current.Intersect(ids).ToList());
+            if (neighbourIds.Count() == 1) return matchingIds.ToList();
+            return neighbourIds.Skip(1).Aggregate(matchingIds, (current, ids) => current.Intersect(ids)).ToList();
         }
 
         public LevelData GetEmptyLevel()
