@@ -9,7 +9,7 @@ namespace Player
 {
     public class PlayerHandler : MonoBehaviour
     {
-        [SerializeField] private PlayerMovement movement;
+        [SerializeField] private PlayerPhysicsController physicsController;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private HealthComponent healthComponentCore;
         [SerializeField] private CameraShake shakeOnDamage;
@@ -18,7 +18,7 @@ namespace Player
         [SerializeField] private PlayerExperienceController experienceController;
         [SerializeField] private CollectingController collectingController;
         
-        public PlayerMovement PlayerMovement => movement;
+        public PlayerPhysicsController PlayerPhysicsController => physicsController;
         public HealthComponent PlayerHealth => healthComponentCore;
         public PlayerExperienceController ExperienceController => experienceController;
 
@@ -26,15 +26,15 @@ namespace Player
         {
             collectingController.Init();
             healthComponentCore.Init(playerData.maxHealth);
-            movement.Init(playerData);
+            physicsController.Init(playerData);
             experienceController.Init();
-            inputController.Init(movement, this);
+            inputController.Init();
             AddListeners();
         }
 
         private void AddListeners()
         {
-            movement.OnFellFromHeightSignal.AddListener(OnFellFromHeight);
+            physicsController.OnFellFromHeightSignal.AddListener(OnFellFromHeight);
             experienceController.OnLevelChanged.AddListener(OnLevelUp);
         }
 
@@ -48,7 +48,7 @@ namespace Player
         {
             shakeOnDamage.Play(damageTaken / 100, .1f);
             takeDamageParticles.Emit(25);
-            if (healthComponentCore.CurrentHealth <= 0) GameController.OnLost(LoseReason.Health);
+            if (healthComponentCore.CurrentHealth <= 0) GameController.Instance.OnLost(LoseReason.Health);
         }
 
         public void OnCollectResource(LevelObjectData collectable)
@@ -65,7 +65,7 @@ namespace Player
 
         public void DisableGravity()
         {
-            movement.DisableGravity();
+            physicsController.DisableGravity();
         }
     }
 }

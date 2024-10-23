@@ -1,9 +1,11 @@
+using Player.Modifiers;
+using Player.Modifiers.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Player
 {
-    public class PlayerExperienceController : MonoBehaviour
+    public class PlayerExperienceController : MonoBehaviour, IModifiable
     {
         [SerializeField] private AudioSource onLevelUpSound;
         public readonly UnityEvent<uint, float> OnLevelChanged = new();
@@ -11,7 +13,7 @@ namespace Player
         private float _nextLevelXp = 100;
         private float _currentXp = 0;
         
-        [HideInInspector] public float expModifier = 1;
+        private float _expModifier = 1;
 
         public uint CurrentLevel { get; private set; } = 1;
 
@@ -40,7 +42,13 @@ namespace Player
 
         public float GetActualExperience(float rawExperience)
         {
-            return rawExperience * expModifier;
+            return rawExperience * _expModifier;
+        }
+
+        public void Modify(ModifierType type)
+        {
+            if (type == ModifierType.ExperienceMultiplier)
+                _expModifier += .25f;
         }
     }
 }

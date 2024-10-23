@@ -11,9 +11,12 @@ GameObject:
   - component: {fileID: 5261622674665880559}
   - component: {fileID: 1670278795077820527}
   - component: {fileID: 7254934560565152100}
+  - component: {fileID: 5541925925757021117}
+  - component: {fileID: 9220479824310096730}
   - component: {fileID: 7229322560117192611}
   - component: {fileID: 7888285217626039019}
   - component: {fileID: 3186831880647878831}
+  - component: {fileID: 8275420458766367407}
   - component: {fileID: 883043339480556657}
   - component: {fileID: 1006460341625656352}
   - component: {fileID: 6741125513951303541}
@@ -61,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a7d121e5dd46a2a5658248c2f76e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 7229322560117192611}
+  physicsController: {fileID: 7229322560117192611}
   playerData: {fileID: 11400000, guid: de312c9d12367034d9f53e904948d387, type: 2}
   healthComponentCore: {fileID: 7254934560565152100}
   shakeOnDamage: {fileID: 0}
@@ -81,6 +84,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c76bedf42b048a4ab05339ee91a521e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5541925925757021117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557411087414179913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee26ab0c2a9e427d9bdac6157783da90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 7
+  controller: {fileID: 7229322560117192611}
+  rigidBody: {fileID: 4299670562065739201}
+--- !u!114 &9220479824310096730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557411087414179913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41157c4b77d542e7882abe0dd7f0e76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  physicsController: {fileID: 7229322560117192611}
 --- !u!114 &7229322560117192611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,14 +130,11 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpPower: 7
-  moveSpeed: 5
   slowdownParticles: {fileID: 6439990044211426583}
   movementAnimator: {fileID: 7391462341355130111}
   grassSound: {fileID: 6741125513951303541}
   fallDamageSound: {fileID: 1252100110218106693}
   slowdownFallingSound: {fileID: 9104391125904479244}
-  jumpHeightMultiplier: 0
 --- !u!114 &7888285217626039019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e4e697470642e4b3e4d7aa9db010ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpComponent: {fileID: 5541925925757021117}
+  movementComponent: {fileID: 9220479824310096730}
+  physicsController: {fileID: 7229322560117192611}
 --- !u!114 &3186831880647878831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +163,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onLevelUpSound: {fileID: 883043339480556657}
-  expModifier: 1
+--- !u!114 &8275420458766367407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557411087414179913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf5bb2b55704e979649074b1439b729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifiers:
+    list:
+    - key: 0
+      value: {fileID: 5541925925757021117}
+    - key: 1
+      value: {fileID: 7254934560565152100}
+    - key: 2
+      value: {fileID: 7254934560565152100}
+    - key: 3
+      value: {fileID: 3186831880647878831}
 --- !u!82 &883043339480556657
 AudioSource:
   m_ObjectHideFlags: 0

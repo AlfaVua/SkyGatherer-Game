@@ -1,38 +1,24 @@
 using System.Collections.Generic;
-using Components.Component;
-using Player.Components;
+using Components.Collection;
 using Player.Modifiers.Data;
+using UnityEngine;
 
 namespace Player.Modifiers
 {
-    public class PlayerModifierHandler
+    public class PlayerModifierHandler : MonoBehaviour
     {
-        private Dictionary<uint, PlayerModifiersBase> _sessionModifiers;
-        private PlayerHandler _playerHandler;
-        private PlayerModifiersList _modifiersList;
-        
-        public PlayerModifierHandler(PlayerModifiersList modifiersList, PlayerHandler playerHandler)
+        [SerializeField] private KeyValueList<ModifierType, MonoBehaviour> modifiers;
+        private Dictionary<ModifierType, IModifiable> _sessionModifiers;
+
+        public void Init()
         {
-            _sessionModifiers = new Dictionary<uint, PlayerModifiersBase>();
-            _playerHandler = playerHandler;
-            _modifiersList = modifiersList;
-            _modifiersList.Init();
+            _sessionModifiers = new Dictionary<ModifierType, IModifiable>();
         }
 
-        public PlayerMovement PlayerMovement => _playerHandler.PlayerMovement;
-        public HealthComponent PlayerHealth => _playerHandler.PlayerHealth;
-        public PlayerExperienceController ExperienceController => _playerHandler.ExperienceController;
-
-        public void ApplyModifier(PlayerModifierData modifier)
+        public void ApplyModifier(ModifierType modifierType)
         {
-            if (_sessionModifiers.ContainsKey(modifier.id)) _sessionModifiers[modifier.id].IncreaseModifier();
-            else _sessionModifiers.Add(modifier.id, ModifierFactory.Create(modifier));
-            _sessionModifiers[modifier.id].Apply(this);
-        }
-
-        public PlayerModifierData GetRandomModifier()
-        {
-            return _modifiersList.modifiers.GetRandomData();
+            _sessionModifiers.TryAdd(modifierType, modifiers[modifierType] as IModifiable);
+            _sessionModifiers[modifierType].Modify(modifierType);
         }
     }
 }

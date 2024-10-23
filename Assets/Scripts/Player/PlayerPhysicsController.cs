@@ -5,13 +5,11 @@ using UnityEngine.Events;
 
 namespace Player
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerPhysicsController : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private CapsuleCollider2D playerCollider;
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] private float jumpPower = 7;
-        [SerializeField] private float moveSpeed = 1;
         [SerializeField] private ParticleSystem slowdownParticles;
         [SerializeField] private Animator movementAnimator;
         [SerializeField] private PlaySoundRandomPitch grassSound;
@@ -20,8 +18,8 @@ namespace Player
 
         public readonly UnityEvent<float> OnFellFromHeightSignal = new();
 
-        private bool _fallingSlowed;
-        private bool IsOnGround => RaycastGround();
+        public bool IsOnGround => RaycastGround();
+        public bool IsFallingSlowed { get; private set; }
 
         private float _movingVelocityX;
         private float _fallDamageThreshold;
@@ -30,12 +28,9 @@ namespace Player
 
         private MovementViewBehavior _moveBehavior;
 
-        [HideInInspector] public float jumpHeightMultiplier;
-
         public void Init(PlayerData playerData)
         {
             _moveBehavior = new MovementViewBehavior(movementAnimator);
-            jumpHeightMultiplier = 1;
             _fallDamageThreshold = playerData.fallDamageThreshold;
         }
 
@@ -50,11 +45,11 @@ namespace Player
             return hit;
         }
 
-        private void JumpAction()
+        public void JumpAction(float jumpPower)
         {
             ResetVerticalVelocity();
             _moveBehavior.IsOnGround = false;
-            rigidBody.AddForce(jumpPower * jumpHeightMultiplier * Vector2.up, ForceMode2D.Impulse);
+            rigidBody.AddForce(jumpPower * Vector2.up, ForceMode2D.Impulse);
         }
 
         private void Update()
@@ -80,17 +75,17 @@ namespace Player
             _moveBehavior.Update(rigidBody.velocity);
         }
 
-        private void SlowdownFalling()
+        public void SlowdownFalling()
         {
             rigidBody.AddForce(Vector2.down * rigidBody.velocity.y, ForceMode2D.Impulse);
-            _fallingSlowed = true;
+            IsFallingSlowed = true;
             slowdownParticles.Emit(50);
             slowdownFallingSound.Play();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            _fallingSlowed = false;
+            IsFallingSlowed = false;
             if (!IsOnGround) return;
             _moveBehavior.IsOnGround = true;
             
@@ -105,19 +100,13 @@ namespace Player
             _moveBehavior.IsOnGround = false;
         }
 
-        public void Move(float direction)
+        public void Move(float moveSpeed)
         {
-            _movingVelocityX = direction * moveSpeed;
-            if (direction != 0)
-                movementAnimator.transform.localScale = new Vector3(direction, 1, 1);
+            _movingVelocityX = moveSpeed;
+            if (moveSpeed != 0)
+                movementAnimator.transform.localScale = new Vector3(Mathf.Sign(moveSpeed), 1, 1);
             else if (IsOnGround)
                 ResetVerticalVelocity();
-        }
-
-        public void Jump()
-        {
-            if (IsOnGround) JumpAction();
-            else if (!_fallingSlowed && rigidBody.velocity.y < 0) SlowdownFalling();
         }
 
         public void Drop()

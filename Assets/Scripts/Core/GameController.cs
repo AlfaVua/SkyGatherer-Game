@@ -15,13 +15,13 @@ namespace Core
         [SerializeField] private PlayerHandler player;
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private UIController uiController;
-        [SerializeField] private PlayerModifiersList modifiers;
-        
-        private PlayerModifierHandler _modifierHandler;
+        [SerializeField] private ModifiersList modifiers;
+        [SerializeField] private PlayerModifierHandler modifierHandler;
         
         public readonly UnityEvent<int, uint> PlayerMovedToNewLevel = new UnityEvent<int, uint>();
         public PlayerHandler Player => player;
-        public PlayerModifierHandler ModifierHandler => _modifierHandler;
+        public PlayerModifierHandler ModifierHandler => modifierHandler;
+        public ModifiersList ModifierList => modifiers;
         
         public ResourceData GetResourceById(uint id) => resourceManager.GetResourceById(id);
         private void Awake()
@@ -35,7 +35,8 @@ namespace Core
         private void InitResources()
         {
             uiController.Init();
-            _modifierHandler = new PlayerModifierHandler(modifiers, player);
+            modifiers.Init();
+            modifierHandler.Init();
             player.Init();
             resourceManager.Init();
             levelController?.Init();
@@ -96,9 +97,9 @@ namespace Core
             InputController.Inputs.Disable();
         }
 
-        public static void OnLost(LoseReason reason)
+        public void OnLost(LoseReason reason)
         {
-            Instance.player.DisableGravity();
+            player.DisableGravity();
             UISignal.ToggleLoseUI.Invoke(reason);
         }
     }

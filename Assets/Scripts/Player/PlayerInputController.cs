@@ -1,4 +1,5 @@
 using Core;
+using Player.Components;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,35 +8,34 @@ namespace Player
 {
     public class PlayerInputController : MonoBehaviour, Inputs.IPlayerActions
     {
-        private PlayerMovement _movement;
-        private PlayerHandler _handler;
+        [SerializeField] private JumpComponent jumpComponent;
+        [SerializeField] private MovementComponent movementComponent;
+        [SerializeField] private PlayerPhysicsController physicsController;
 
-        private bool _disableMovement = false;
+        private bool _disableMovement;
 
-        public void Init(PlayerMovement movement, PlayerHandler handler)
+        public void Init()
         {
             UISignal.OnOverlayUIChanged.AddListener(OnUIVisibilityChanged);
             AddListeners();
-            _movement = movement;
-            _handler = handler;
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
             if (_disableMovement) return;
-            _movement.Move(context.ReadValue<Vector2>().x);
+            movementComponent.Move(context.ReadValue<Vector2>().x);
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
             if (_disableMovement || context.canceled) return;
-            _movement.Jump();
+            jumpComponent.Jump();
         }
 
         public void OnDrop(InputAction.CallbackContext context)
         {
             if (_disableMovement) return;
-            _movement.Drop();
+            physicsController.Drop();
         }
 
         public void OnOpenInventory(InputAction.CallbackContext context)
@@ -51,7 +51,7 @@ namespace Player
         private void OnUIVisibilityChanged(bool visible)
         {
             _disableMovement = visible;
-            if (visible) _movement.Move(0);
+            if (visible) movementComponent.Move(0);
         }
 
         private void OnEnable()

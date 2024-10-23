@@ -1,6 +1,6 @@
 namespace Player.Modifiers.Data
 {
-    public enum PlayerModifierType
+    public enum ModifierType
     {
         JumpHeight,
         MaxHpIncrease,

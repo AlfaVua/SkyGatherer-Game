@@ -14,18 +14,18 @@ namespace UI.Components
 
         public Button.ButtonClickedEvent OnClicked => button.onClick;
         
-        private PlayerModifierData _staticData;
+        private ModifierData _staticData;
 
         public void Redraw()
         {
-            _staticData = GameController.Instance.ModifierHandler.GetRandomModifier();
+            _staticData = GameController.Instance.ModifierList.GetRandomData();
             title.text = _staticData.Title;
             description.text = _staticData.Description;
         }
 
         public void Apply()
         {
-            GameController.Instance.ModifierHandler.ApplyModifier(_staticData);
+            GameController.Instance.ModifierHandler.ApplyModifier(_staticData.Type);
         }
     }
 }

@@ -1,14 +1,19 @@
+using System;
+using Player.Modifiers;
+using Player.Modifiers.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Player.Components
 {
-    public class HealthComponent : MonoBehaviour
+    public class HealthComponent : MonoBehaviour, IModifiable
     {
         public readonly UnityEvent<float> OnHealthChanged = new();
         public readonly UnityEvent<float> OnMaxHealthChanged = new();
         public float CurrentHealth { get; private set; }
         private float _initialMaxHealth, _currentMaxHealth;
+        
+        private float _maxHealthMultiplier = 1;
 
         public void Init(float maxHealth)
         {
@@ -22,9 +27,10 @@ namespace Player.Components
             OnHealthChanged.Invoke(CurrentHealth -= damage);
         }
 
-        public void IncreaseMaxHealthByPercent(float maxHpModifier)
+        private void IncreaseMaxHealthByPercent(float percent)
         {
-            var newMaxHealth = _initialMaxHealth * maxHpModifier;
+            _maxHealthMultiplier += percent;
+            var newMaxHealth = _initialMaxHealth * _maxHealthMultiplier;
             var difference = newMaxHealth - _currentMaxHealth;
             _currentMaxHealth = newMaxHealth;
             OnMaxHealthChanged.Invoke(newMaxHealth);
@@ -38,9 +44,24 @@ namespace Player.Components
             OnHealthChanged.Invoke(CurrentHealth);
         }
 
-        public void HealForPercentage(float percentage)
+        private void HealForPercentage(float percentage)
         {
             HealForValue(percentage * _currentMaxHealth);
+        }
+
+        public void Modify(ModifierType type)
+        {
+            switch (type)
+            {
+                case ModifierType.Heal:
+                    HealForPercentage(0.5f);
+                    break;
+                case ModifierType.MaxHpIncrease:
+                    IncreaseMaxHealthByPercent(.1f);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
     }
 }

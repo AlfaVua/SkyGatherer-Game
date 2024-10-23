@@ -10,7 +10,7 @@ namespace Components.Component
         {
             if (Utils.Utils.IsPlayer(other.gameObject))
             {
-                GameController.OnLost(LoseReason.Fell);
+                GameController.Instance.OnLost(LoseReason.Fell);
             }
         }
     }

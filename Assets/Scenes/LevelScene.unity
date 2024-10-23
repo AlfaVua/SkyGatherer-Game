@@ -184,6 +184,7 @@ MonoBehaviour:
   resourceManager: {fileID: 11400000, guid: 96c05318602c6b745af96f9349426820, type: 2}
   uiController: {fileID: 85071751}
   modifiers: {fileID: 11400000, guid: 7858cd2564c36754d816cfeb59453040, type: 2}
+  modifierHandler: {fileID: 895686262}
 --- !u!114 &310175354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +595,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5a7d121e5dd46a2a5658248c2f76e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &895686262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8275420458766367407, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
+  m_PrefabInstance: {fileID: 895686260}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722885613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf5bb2b55704e979649074b1439b729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &895686263 stripped
