@@ -18,6 +18,43 @@ namespace Generators.Level
             InitLevelMap(levels, starting, emptyLevel);
             InitRelations();
         }
+        
+        public LevelData GetLevelData(int id)
+        {
+            return _levels[id];
+        }
+
+        private LevelRelationData GetLevelRelations(int id)
+        {
+            return _relations[id];
+        }
+
+        public List<int> FindLevelsWithMatchingNeighbors(Dictionary<LevelSide, LevelBase> sides, bool excludeBottoms = false)
+        {
+            var neighbourIds = GetMatchingNeighbors(sides);
+            neighbourIds = excludeBottoms ? ExcludeBottoms(neighbourIds) : neighbourIds;
+            
+            var matchingIds = neighbourIds.First();
+            if (neighbourIds.Count() == 1) return matchingIds.ToList();
+            return neighbourIds.Skip(1).Aggregate(matchingIds, (current, ids) => current.Intersect(ids)).ToList();
+        }
+
+        public LevelData GetEmptyLevel()
+        {
+            return GetLevelData(1);
+        }
+
+        private IEnumerable<IEnumerable<int>> GetMatchingNeighbors(Dictionary<LevelSide, LevelBase> sides)
+        {
+            return sides
+                .Where(side => side.Value)
+                .Select(side => GetLevelRelations(side.Value.staticData.id).GetNeighbors(OppositeSide.Get(side.Key)).AsEnumerable());
+        }
+
+        private IEnumerable<IEnumerable<int>> ExcludeBottoms(IEnumerable<IEnumerable<int>> levelList)
+        {
+            return levelList.Select(list => list.Where(id => !GetLevelData(id).Bottom.enabled));
+        }
 
         private void InitLevelMap(IReadOnlyCollection<LevelData> levels, LevelData starting, LevelData emptyLevel)
         {
@@ -32,10 +69,10 @@ namespace Generators.Level
             var allLevels = _levels.Values.ToList();
             var activeLevels = _levels.Values.Skip(2).ToList();
             _relations = allLevels.ToDictionary(level => level.id, _ => new LevelRelationData());
-            allLevels.ForEach(level => FillRelations(level, _relations[level.id], activeLevels));
+            allLevels.ForEach(level => FillLevelRelations(level, _relations[level.id], activeLevels));
         }
 
-        private void FillRelations(LevelData level, LevelRelationData relation, List<LevelData> levels)
+        private void FillLevelRelations(LevelData level, LevelRelationData relation, in List<LevelData> levels)
         {
             if (level.Left.enabled && level.IsLeftUnique)
                 relation.Left = level.Left.customNeighbourIds;
@@ -57,35 +94,6 @@ namespace Generators.Level
                 if (level.Bottom.enabled == _level.Top.enabled && !level.IsBottomUnique && !_level.IsTopUnique)
                     relation.Bottom.Add(_level.id);
             });
-        }
-        
-        public LevelData GetLevelData(int id)
-        {
-            return _levels[id];
-        }
-        
-        public LevelRelationData GetLevelRelations(int id)
-        {
-            return _relations[id];
-        }
-
-        public List<int> FindLevelsWithMatchingNeighbors(Dictionary<LevelSide, LevelBase> sides, bool excludeBottoms = false) // todo, I have to optimize this monstrosity for sure
-        {
-            var neighbourIds = sides
-                .Where(side => side.Value)
-                .Select(side => GetLevelRelations(side.Value.staticData.id).GetNeighbors(OppositeSide.Get(side.Key)).AsEnumerable());
-            if (excludeBottoms)
-            {
-                neighbourIds = neighbourIds.Select(list => list.Where(id => !GetLevelData(id).Bottom.enabled));
-            }
-            var matchingIds = neighbourIds.First();
-            if (neighbourIds.Count() == 1) return matchingIds.ToList();
-            return neighbourIds.Skip(1).Aggregate(matchingIds, (current, ids) => current.Intersect(ids)).ToList();
-        }
-
-        public LevelData GetEmptyLevel()
-        {
-            return GetLevelData(1);
         }
     }
 }

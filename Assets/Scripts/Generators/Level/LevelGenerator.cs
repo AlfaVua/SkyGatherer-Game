@@ -51,15 +51,6 @@ namespace Generators.Level
             return IsCached(indexX, indexY) ? GetCachedLevelAndUpdate(indexX, indexY) : null;
         }
 
-        private LevelBase GetCachedLevelAndUpdate(int indexX, uint indexY)
-        {
-            var levelData = GetCachedLevelData(indexX, indexY);
-            var level = GetLevelDataById(levelData.LevelID).GetNewInstance();
-            level.Init(indexX, indexY, levelData);
-            _activeLevels.Add(level.Name, level);
-            return level;
-        }
-
         private bool IsCoordsActive(int indexX, uint indexY)
         {
             return _activeLevels.ContainsKey(LevelCache.GetKey(indexX, indexY));
@@ -74,6 +65,15 @@ namespace Generators.Level
         {
             return _cache.HasLevel(indexX, indexY);
         }
+
+        private LevelBase GetCachedLevelAndUpdate(int indexX, uint indexY)
+        {
+            var levelData = GetCachedLevelData(indexX, indexY);
+            var level = GetLevelDataById(levelData.LevelID).GetNewInstance();
+            level.Init(indexX, indexY, levelData);
+            _activeLevels.Add(level.Name, level);
+            return level;
+        }
         
         private CachedLevelData GetCachedLevelData(int indexX, uint indexY)
         {
@@ -87,7 +87,7 @@ namespace Generators.Level
 
         private LevelBase CreateAvailableLevelAt(int indexX, uint indexY)
         {
-            var neighbors = GetCoordNeighbors(indexX, indexY);
+            var neighbors = GetNeighborsOfCoords(indexX, indexY);
             var foundNeighbors = _dataManager.FindLevelsWithMatchingNeighbors(neighbors, indexY == 0);
             if (foundNeighbors.Count == 0) return _dataManager.GetEmptyLevel().GetNewInstance();
             var level = _dataManager.GetLevelData(foundNeighbors.GetRandom()).GetNewInstance();
@@ -97,7 +97,7 @@ namespace Generators.Level
             return level;
         }
 
-        private Dictionary<LevelSide, LevelBase> GetCoordNeighbors(int indexX, uint indexY)
+        private Dictionary<LevelSide, LevelBase> GetNeighborsOfCoords(int indexX, uint indexY)
         {
             return new Dictionary<LevelSide, LevelBase>
             {
@@ -110,8 +110,8 @@ namespace Generators.Level
 
         private void RemoveLevel(LevelBase level)
         {
-            _activeLevels.Remove(level.Name);
             Object.Destroy(level.gameObject);
+            _activeLevels.Remove(level.Name);
             _cache.SaveLevel(level);
         }
 
