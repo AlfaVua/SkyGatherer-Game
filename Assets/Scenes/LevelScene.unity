@@ -538,6 +538,10 @@ PrefabInstance:
       propertyPath: shakeOnDamage
       value: 
       objectReference: {fileID: 1722885618}
+    - target: {fileID: 5044365921438974509, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
+      propertyPath: shake
+      value: 
+      objectReference: {fileID: 1722885618}
     - target: {fileID: 5261622674665880559, guid: 77e7de559039e4b438a4abb2adf97dce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

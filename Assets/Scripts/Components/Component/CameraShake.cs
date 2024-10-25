@@ -21,16 +21,30 @@ namespace Components.Component
             }
         }
 
-        public void Play(float power, float duration)
+        public void Play(float power, float duration, float delay = 0)
         {
+            Stop();
             _originalPos = camTransform.localPosition;
             _shakeAmount = power;
-            _shakeDuration = duration;
-            StartCoroutine(nameof(ShakeRoutine));
+            _shakeDuration = duration == 0 ? float.MaxValue : duration;
+            StartCoroutine(nameof(ShakeRoutine), delay);
         }
 
-        private IEnumerator ShakeRoutine()
+        public void Stop()
         {
+            StopCoroutine(nameof(ShakeRoutine));
+            _shakeDuration = 0;
+        }
+
+        public void UpdateOriginalPos(Vector2 newPos)
+        {
+            _originalPos = Vector3.forward * camTransform.position.z + (Vector3)newPos;
+        }
+
+        private IEnumerator ShakeRoutine(float waitFor)
+        {
+            if (waitFor != 0)
+                yield return new WaitForSeconds(waitFor);
             while (_shakeDuration > 0)
             {
                 camTransform.localPosition = _originalPos + Random.insideUnitSphere * _shakeAmount;

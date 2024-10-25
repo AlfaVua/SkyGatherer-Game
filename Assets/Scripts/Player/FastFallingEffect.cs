@@ -12,6 +12,7 @@ namespace Player
         [SerializeField] private float deactivationThreshold;
         [SerializeField] private ParticleSystem particleEffect;
         [SerializeField] private List<TrailRenderer> trails;
+        [SerializeField] private CameraShake shake;
 
         private bool _isActivated = false;
 
@@ -20,6 +21,7 @@ namespace Player
             var magnitude = target.velocity.magnitude;
             if (_isActivated)
             {
+                shake.UpdateOriginalPos(target.position);
                 if (magnitude < deactivationThreshold)
                     DeactivateEffect();
             }
@@ -31,6 +33,7 @@ namespace Player
         {
             if (_isActivated) return;
             _isActivated = true;
+            shake.Play(.05f, 0, .5f);
             trails.ForEach(trail => trail.emitting = true);
             particleEffect.Play();
             effectSound.FadeIn();
@@ -40,6 +43,7 @@ namespace Player
         {
             if (!_isActivated) return;
             _isActivated = false;
+            shake.Stop();
             trails.ForEach(trail => trail.emitting = false);
             particleEffect.Stop();
             effectSound.FadeOut();
