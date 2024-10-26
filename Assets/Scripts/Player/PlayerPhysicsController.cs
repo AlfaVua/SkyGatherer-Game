@@ -56,7 +56,12 @@ namespace Player
         {
             if (_grassSoundCooldown > (_moveBehavior.IsOnGround ? 0 : .15f))
                 _grassSoundCooldown -= Time.deltaTime;
-            else if (_moveBehavior.IsOnGround && _movingVelocityX != 0) PlayGrassSound();
+            else if (_moveBehavior.IsOnGround)
+            {
+                if (_movingVelocityX != 0)
+                    PlayGrassSound();
+                _moveBehavior.IsOnGround = RaycastGround(.15f);
+            }
         }
 
         private void PlayGrassSound()
@@ -93,11 +98,6 @@ namespace Player
             PlayGrassSound();
             if (other.relativeVelocity.y > _fallDamageThreshold)
                 OnFellFromHeight(other.relativeVelocity.y);
-        }
-
-        private void OnCollisionExit2D(Collision2D other)
-        {
-            _moveBehavior.IsOnGround = false;
         }
 
         public void Move(float moveSpeed)

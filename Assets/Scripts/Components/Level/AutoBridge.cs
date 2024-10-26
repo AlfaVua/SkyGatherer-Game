@@ -42,8 +42,10 @@ namespace Components.Level
 
         private void GenerateJoint(float distanceBetween, Vector3 direction)
         {
+            var angle = Vector3.Angle(Vector3.right, direction);
             var joint = Instantiate(jointPrefab, jointsContainer);
             joint.transform.position = startJoint.EndPoint() + (_joints.Count - .5f) * distanceBetween * direction;
+            joint.transform.rotation = Quaternion.AngleAxis(angle, Mathf.Sign(direction.y) * Vector3.forward);
             _joints.Add(joint);
         }
 

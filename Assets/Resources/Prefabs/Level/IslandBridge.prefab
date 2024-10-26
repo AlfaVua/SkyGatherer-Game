@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8770157888491652141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2564995111275153483}
   - component: {fileID: 6314726798541093234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IslandBridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,19 +94,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1120253614131733995, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.5403165
+      value: 0.325115
       objectReference: {fileID: 0}
     - target: {fileID: 1120253614131733995, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -0.013
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 4912156173458502395, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 1.5376835
+      value: 0.9535913
       objectReference: {fileID: 0}
     - target: {fileID: 4912156173458502395, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -0.013
+      value: 0.02494049
       objectReference: {fileID: 0}
     - target: {fileID: 5755745357370119623, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_Pivot.x
@@ -170,11 +170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5755745357370119623, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.039
+      value: 0.641
       objectReference: {fileID: 0}
     - target: {fileID: 5755745357370119623, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.033
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5755745357370119623, guid: c4a618d983dc27547b6c81e6b3613aed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
