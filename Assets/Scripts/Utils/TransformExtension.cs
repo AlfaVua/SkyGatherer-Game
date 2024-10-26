@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace Utils.TransformExtenstion
@@ -8,7 +9,15 @@ namespace Utils.TransformExtenstion
         {
             foreach (Transform child in transform)
             {
-                Object.Destroy(child.gameObject);
+                
+#if UNITY_EDITOR
+                if (!EditorApplication.isPlaying)
+                {
+                    Object.DestroyImmediate(child.gameObject);
+                    continue;
+                }
+#endif
+                Object.Destroy(child.gameObject, 0);
             }
         }
     }
