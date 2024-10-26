@@ -16,18 +16,16 @@ namespace Components.Level
 
         [SerializeField] private bool generate;
 
-        private List<BridgeComponent> _joints;
-
         private void Generate()
         {
             jointsContainer.ClearChildren();
-            _joints = new List<BridgeComponent> {startJoint};
-
-            if (jointsCount != 0) GenerateJoints();
-            ConnectJoints();
+            var joints = new List<BridgeComponent> { startJoint };
+            if (jointsCount != 0) GenerateJoints(joints);
+            joints.Add(endJoint);
+            ConnectJoints(joints);
         }
 
-        private void GenerateJoints()
+        private void GenerateJoints(ICollection<BridgeComponent> joints)
         {
             var startJointPoint = startJoint.EndPoint();
             var endJointPoint = endJoint.StartPoint();
@@ -35,30 +33,29 @@ namespace Components.Level
             var distanceBetweenJoints = jointsCount == 0 ? 0 : distanceBetweenPoints / jointsCount;
             var bridgeDirection = (endJointPoint - startJointPoint).normalized;
             
-            while (_joints.Count <= jointsCount)
-                GenerateJoint(distanceBetweenJoints, bridgeDirection);
-            _joints.Add(endJoint);
+            while (joints.Count <= jointsCount)
+                GenerateJoint(distanceBetweenJoints, bridgeDirection, joints);
         }
 
-        private void GenerateJoint(float distanceBetween, Vector3 direction)
+        private void GenerateJoint(float distanceBetween, Vector3 direction, ICollection<BridgeComponent> jointsList)
         {
             var angle = Vector3.Angle(Vector3.right, direction);
             var joint = Instantiate(jointPrefab, jointsContainer);
-            joint.transform.position = startJoint.EndPoint() + (_joints.Count - .5f) * distanceBetween * direction;
+            joint.transform.position = startJoint.EndPoint() + (jointsList.Count - .5f) * distanceBetween * direction;
             joint.transform.rotation = Quaternion.AngleAxis(angle, Mathf.Sign(direction.y) * Vector3.forward);
-            _joints.Add(joint);
+            jointsList.Add(joint);
         }
 
-        private void ConnectJoints()
+        private void ConnectJoints(in List<BridgeComponent> joints)
         {
-            if (_joints.Count < 2) return;
-            _joints[0].rightJoint.connectedBody = _joints[1].rigidBody;
-            for (var i = 1; i < _joints.Count - 1; i++)
+            if (joints.Count < 2) return;
+            joints[0].rightJoint.connectedBody = joints[1].rigidBody;
+            for (var i = 1; i < joints.Count - 1; i++)
             {
-                _joints[i].leftJoint.connectedBody = _joints[i - 1].rigidBody;
-                _joints[i].rightJoint.connectedBody = _joints[i + 1].rigidBody;
+                joints[i].leftJoint.connectedBody = joints[i - 1].rigidBody;
+                joints[i].rightJoint.connectedBody = joints[i + 1].rigidBody;
             }
-            _joints[^1].leftJoint.connectedBody = _joints[^2].rigidBody;
+            joints[^1].leftJoint.connectedBody = joints[^2].rigidBody;
         }
 
         private void OnDrawGizmos()
