@@ -20,7 +20,7 @@ namespace UI.Components
         {
             while (Vector3.Distance(transform.position, targetPosition) > 30f)
             {
-                transform.position = Vector3.Slerp(transform.position, targetPosition, 0.1f * Time.deltaTime * 30f);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, 0.1f * Time.deltaTime * 30f);
                 yield return new WaitForEndOfFrame();
             }
             Destroy(gameObject);
