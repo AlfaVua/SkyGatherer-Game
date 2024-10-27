@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace UI
 {
-    public class FloatingTextUI : MonoBehaviour
+    public class LevelWorldUI : MonoBehaviour
     {
-        private static FloatingTextUI _instance;
+        private static LevelWorldUI _instance;
         [SerializeField] private FloatingText prefab;
 
         private void Awake()

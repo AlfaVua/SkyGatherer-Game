@@ -60,7 +60,7 @@ namespace Level.Resource
             _isCollected = true;
             UpdateView();
             collectEffect.Emit(20);
-            GameController.Instance.Player.OnCollectResource(_static);
+            GameController.Instance.Player.OnCollectResource(_static, transform.position);
         }
 
         private void OnEnable()

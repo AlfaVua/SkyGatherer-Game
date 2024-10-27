@@ -12,12 +12,11 @@ namespace Player
             inventory.Init();
         }
 
-        public void Collect(LevelObjectData collectable)
+        public void Collect(LevelObjectData collectable, Vector3 worldPosition)
         {
-            collectable.Drops.ForEach(resource =>
-            {
-                inventory.AddResource(resource.staticID);
-            });
+            if (collectable.Drops.Count == 0) return;
+            collectable.Drops.ForEach(resource => inventory.AddResource(resource.staticID));
+            inventory.OnCollectResources.Invoke(collectable.Drops, worldPosition);
         }
     }
 }

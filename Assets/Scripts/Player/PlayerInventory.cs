@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
+using Generators.Resource;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Player
 {
     public class PlayerInventory : ScriptableObject
     {
+        public readonly UnityEvent<IReadOnlyCollection<ResourceData>, Vector3> OnCollectResources = new UnityEvent<IReadOnlyCollection<ResourceData>, Vector3>();
         private Dictionary<uint, int> _resources;
 
         public void Init()

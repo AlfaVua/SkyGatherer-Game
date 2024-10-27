@@ -51,11 +51,11 @@ namespace Player
             if (healthComponentCore.CurrentHealth <= 0) GameController.Instance.OnLost(LoseReason.Health);
         }
 
-        public void OnCollectResource(LevelObjectData collectable)
+        public void OnCollectResource(LevelObjectData collectable, Vector3 worldPosition)
         {
-            collectingController.Collect(collectable);
+            collectingController.Collect(collectable, worldPosition);
             experienceController.AddExperience(collectable.CollectionExperience);
-            FloatingTextUI.CreateFloatingText(transform.position, Color.white, "EXP +" + Mathf.Floor(experienceController.GetActualExperience(collectable.CollectionExperience)));
+            LevelWorldUI.CreateFloatingText(transform.position, Color.white, "EXP +" + Mathf.Floor(experienceController.GetActualExperience(collectable.CollectionExperience)));
         }
 
         private void OnLevelUp(uint level, float nextExperience)
